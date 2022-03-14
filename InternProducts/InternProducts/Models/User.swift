@@ -8,8 +8,8 @@
 import Foundation
 
 struct User {
-    let username: String
-    let password: String
-
-    // TODO: Init x2 & maybe default values?
+    var username: String
+    var password: String
+    var loginToken: String?
+    
 }

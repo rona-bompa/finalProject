@@ -9,11 +9,9 @@ import Foundation
 import UIKit
 
 struct Product {
-
     var title: String
     var description: String
     var tags: String
-    var image: UIImage
+    var image: UIImage?
 
-    // TODO: Maybe optionals?
 }
