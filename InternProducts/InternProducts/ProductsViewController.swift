@@ -27,14 +27,13 @@ class ProductsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UINib(nibName: Constants.productTableViewCellId, bundle: nil), forCellReuseIdentifier: Constants.productCellId)
-        spinner.startAnimating()
         downloadProductList()
-        spinner.stopAnimating()
+
     }
 
     // MARK: - Function Download
     private func downloadProductList() {
-
+        spinner.startAnimating()
         let urlSession = URLSession(configuration: .default)
         if let url = URL(string: "http://localhost:8080/products?loginToken=\(loginToken)") {
 
@@ -67,6 +66,7 @@ class ProductsViewController: UIViewController {
                                     //self.products =  try self.codableDeserialization(for: self.productsDictionary)
 
                                     DispatchQueue.main.async {
+                                        self.spinner.stopAnimating()
                                         self.tableView.reloadData()
                                     }
                                     print(self.productsDictionary)
