@@ -9,6 +9,13 @@ import UIKit
 
 class ProductTableViewCell: UITableViewCell {
 
+    // MARK: - Outlets
+
+    @IBOutlet weak var productTile: UILabel!
+    @IBOutlet weak var productDescription: UILabel!
+    @IBOutlet weak var productTag: UILabel!
+    @IBOutlet weak var productImage: UIImageView!
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

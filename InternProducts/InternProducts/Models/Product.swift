@@ -8,10 +8,12 @@
 import Foundation
 import UIKit
 
-struct Product {
-    var title: String
-    var description: String
-    var tags: String
-    var image: UIImage?
+struct Product: Codable {
+    let title: String
+    let description: String
+    let tags: String?
+
+    var image: String? //   UIImage? CustomImage?
+    var date: Int?
 
 }

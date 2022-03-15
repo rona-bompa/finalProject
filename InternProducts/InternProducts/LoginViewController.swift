@@ -13,11 +13,21 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var username: UITextField!
     @IBOutlet weak var password: UITextField!
 
+    private(set) public var loginToken = ""
+
     // MARK: - Overrides
     override func viewDidLoad() {
         super.viewDidLoad()
 
         password.isSecureTextEntry = true
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == Constants.fromLoginToProducts {
+            if let cvc = segue.destination as? ProductsViewController {
+                cvc.loginToken = loginToken
+            }
+        }
     }
 
     // MARK: - Button Actions & Functions
@@ -64,7 +74,8 @@ class LoginViewController: UIViewController {
                         DispatchQueue.main.async {
                             // SUCCESS
                             if httpDataStatusResponse["status"] == "SUCCESS" {
-                                // TODO: Maybe store the login Token?
+                                // store & transmit in prepeare the logintToken 
+                                self.loginToken = httpDataStatusResponse["loginToken"] ?? ""
                                 // proceed to display the products to screen
                                 self.performSegue(withIdentifier: Constants.fromLoginToProducts, sender: nil)
                                 // FAIL
@@ -96,5 +107,6 @@ class LoginViewController: UIViewController {
         // show the alert
         present(alert, animated: true)
     }
+
 
 }

@@ -76,11 +76,11 @@
 				935A4EA527DF3B980037AA23 /* Constants.swift */,
 				93E3E30127DB7DAF0007B3B5 /* Models */,
 				93E3E2E827DB7C550007B3B5 /* Main.storyboard */,
-				935A4EAD27E08E1F0037AA23 /* ProductTableViewCell.swift */,
-				935A4EAE27E08E1F0037AA23 /* ProductTableViewCell.xib */,
 				93E3E2FB27DB7D8B0007B3B5 /* RegisterViewController.swift */,
 				93E3E2F927DB7D720007B3B5 /* LoginViewController.swift */,
 				935A4EA727DF59DD0037AA23 /* ProductsViewController.swift */,
+				935A4EAD27E08E1F0037AA23 /* ProductTableViewCell.swift */,
+				935A4EAE27E08E1F0037AA23 /* ProductTableViewCell.xib */,
 				935A4EAB27DFAEC40037AA23 /* ProductDetailsViewController.swift */,
 				93E3E2F027DB7C5F0007B3B5 /* Info.plist */,
 			);
