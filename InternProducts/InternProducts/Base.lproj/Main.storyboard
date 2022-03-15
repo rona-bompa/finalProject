@@ -81,7 +81,7 @@
                     <connections>
                         <outlet property="password" destination="7sd-es-xMX" id="Oxb-dm-6A1"/>
                         <outlet property="username" destination="50k-sc-bIK" id="dUO-fm-14Q"/>
-                        <segue destination="R1E-1g-MJ8" kind="show" identifier="showProductsAfterLogin" id="yYP-Ce-0XB"/>
+                        <segue destination="R1E-1g-MJ8" kind="show" identifier="fromLoginToProducts" id="yYP-Ce-0XB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -163,7 +163,7 @@
                         <outlet property="password" destination="LfY-mX-oyx" id="yXO-hK-5Gd"/>
                         <outlet property="passwordMismatchErrorLabel" destination="Qxn-AQ-oDi" id="a54-FE-0Oy"/>
                         <outlet property="username" destination="qdn-eS-eut" id="9Cy-A3-Sqk"/>
-                        <segue destination="R1E-1g-MJ8" kind="show" identifier="showProductsAfterRegister" id="8cT-N5-Vj3"/>
+                        <segue destination="R1E-1g-MJ8" kind="show" identifier="fromRegisterToProducts" id="8cT-N5-Vj3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qgy-yM-sqK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -227,7 +227,7 @@
                     <connections>
                         <outlet property="spinner" destination="Jef-9o-0bR" id="5An-rc-cQu"/>
                         <outlet property="tableView" destination="oWM-w7-BnR" id="Nco-Nf-eZu"/>
-                        <segue destination="hMW-Wp-tSg" kind="presentation" identifier="showProductDetails" id="ueW-nL-B1S"/>
+                        <segue destination="hMW-Wp-tSg" kind="presentation" identifier="fromProductToProductDetails" id="kU4-4d-CUL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dNB-Gs-YCJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -241,10 +241,77 @@
                     <view key="view" contentMode="scaleToFill" id="QKM-1U-0QS">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="close" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="04O-b2-JTa">
+                                <rect key="frame" x="8" y="1" width="56" height="56"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="C2r-1X-nj8"/>
+                                    <constraint firstAttribute="width" constant="56" id="fLt-B1-vDU"/>
+                                </constraints>
+                                <buttonConfiguration key="configuration" style="plain"/>
+                                <connections>
+                                    <action selector="closeButton:" destination="hMW-Wp-tSg" eventType="touchUpInside" id="HvM-3T-vXD"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Product Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T5h-h4-dsW">
+                                <rect key="frame" x="72" y="8" width="201" height="42"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="35"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QgI-sS-Dn2">
+                                <rect key="frame" x="0.0" y="75" width="414" height="220"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="220" id="WmF-c5-d2L"/>
+                                </constraints>
+                            </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Fax-bk-tpp">
+                                <rect key="frame" x="8" y="303" width="398" height="290"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tags" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0U5-PY-9LT">
+                                <rect key="frame" x="0.0" y="601" width="414" height="66"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="66" id="HGU-L9-Sa3"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="gk5-YR-x4Z"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="QgI-sS-Dn2" firstAttribute="leading" secondItem="gk5-YR-x4Z" secondAttribute="leading" id="3ZZ-z6-Ze9"/>
+                            <constraint firstItem="QgI-sS-Dn2" firstAttribute="top" secondItem="T5h-h4-dsW" secondAttribute="bottom" constant="25" id="40J-Jm-Qqs"/>
+                            <constraint firstItem="gk5-YR-x4Z" firstAttribute="trailing" secondItem="QgI-sS-Dn2" secondAttribute="trailing" id="4gQ-zj-yxT"/>
+                            <constraint firstItem="gk5-YR-x4Z" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="T5h-h4-dsW" secondAttribute="trailing" symbolic="YES" id="4tN-xI-B51"/>
+                            <constraint firstItem="Fax-bk-tpp" firstAttribute="leading" secondItem="gk5-YR-x4Z" secondAttribute="leading" constant="8" id="5ut-Fd-FcL"/>
+                            <constraint firstItem="T5h-h4-dsW" firstAttribute="top" secondItem="gk5-YR-x4Z" secondAttribute="top" constant="8" id="A6o-mi-kge"/>
+                            <constraint firstItem="0U5-PY-9LT" firstAttribute="top" secondItem="Fax-bk-tpp" secondAttribute="bottom" constant="8" id="IXj-SP-fDD"/>
+                            <constraint firstItem="gk5-YR-x4Z" firstAttribute="trailing" secondItem="Fax-bk-tpp" secondAttribute="trailing" constant="8" id="Ilo-vm-aQl"/>
+                            <constraint firstItem="04O-b2-JTa" firstAttribute="centerY" secondItem="T5h-h4-dsW" secondAttribute="centerY" id="MaC-GY-OGd"/>
+                            <constraint firstItem="04O-b2-JTa" firstAttribute="leading" secondItem="gk5-YR-x4Z" secondAttribute="leading" constant="8" id="TWB-zv-QMB"/>
+                            <constraint firstItem="T5h-h4-dsW" firstAttribute="leading" secondItem="04O-b2-JTa" secondAttribute="trailing" constant="8" id="cIR-Iz-HAd"/>
+                            <constraint firstItem="Fax-bk-tpp" firstAttribute="top" secondItem="QgI-sS-Dn2" secondAttribute="bottom" constant="8" id="fsh-mb-Lm0"/>
+                            <constraint firstItem="0U5-PY-9LT" firstAttribute="leading" secondItem="gk5-YR-x4Z" secondAttribute="leading" id="fzv-2p-gyu"/>
+                            <constraint firstItem="gk5-YR-x4Z" firstAttribute="trailing" secondItem="0U5-PY-9LT" secondAttribute="trailing" id="lWb-5A-mUa"/>
+                            <constraint firstItem="gk5-YR-x4Z" firstAttribute="bottom" secondItem="0U5-PY-9LT" secondAttribute="bottom" id="rXH-Dw-6mp"/>
+                        </constraints>
                     </view>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" id="W6f-j9-iB0"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="productDescription" destination="Fax-bk-tpp" id="noB-I1-JE5"/>
+                        <outlet property="productImage" destination="QgI-sS-Dn2" id="JjT-Xq-KXA"/>
+                        <outlet property="productTags" destination="0U5-PY-9LT" id="pH8-vr-cr2"/>
+                        <outlet property="productTitle" destination="T5h-h4-dsW" id="0jW-Tg-swb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xub-LI-Tub" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -252,9 +319,12 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="yYP-Ce-0XB"/>
+        <segue reference="8cT-N5-Vj3"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -9,6 +9,18 @@ import UIKit
 
 class ProductDetailsViewController: UIViewController {
 
+    // MARK: - Outlets
+    @IBOutlet weak var productTitle: UILabel!
+    @IBOutlet weak var productImage: UIImageView!
+    @IBOutlet weak var productDescription: UITextView!
+    @IBOutlet weak var productTags: UILabel!
+
+    @IBAction func closeButton(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
+
+    }
+
+    // MARK: - Overrides
     override func viewDidLoad() {
         super.viewDidLoad()
 
