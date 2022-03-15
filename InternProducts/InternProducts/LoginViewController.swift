@@ -66,7 +66,7 @@ class LoginViewController: UIViewController {
                             if httpDataStatusResponse["status"] == "SUCCESS" {
                                 // TODO: Maybe store the login Token?
                                 // proceed to display the products to screen
-                                self.performSegue(withIdentifier: "showProductsAfterLogin", sender: nil)
+                                self.performSegue(withIdentifier: Constants.fromLoginToProducts, sender: nil)
                                 // FAIL
                             } else if httpDataStatusResponse["status"] == "FAILED" {
                                 // display error message in an Alert
@@ -91,10 +91,8 @@ class LoginViewController: UIViewController {
     private func showAlert(withMessage message: String) {
         // create the alert
         let alert = UIAlertController(title: nil, message: message, preferredStyle: UIAlertController.Style.alert)
-
         // add an action (button)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
-
         // show the alert
         present(alert, animated: true)
     }

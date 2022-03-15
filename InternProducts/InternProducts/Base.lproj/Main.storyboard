@@ -202,6 +202,10 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="oWM-w7-BnR">
+                                <rect key="frame" x="0.0" y="167" width="414" height="569"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="Jef-9o-0bR">
                                 <rect key="frame" x="188.66666666666666" y="349.66666666666669" width="37" height="37"/>
                             </activityIndicatorView>
@@ -209,20 +213,42 @@
                         <viewLayoutGuide key="safeArea" id="ppZ-Y1-1gw"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="oWM-w7-BnR" firstAttribute="top" secondItem="NHf-IS-pWR" secondAttribute="bottom" constant="50" id="0Aj-wi-Zxy"/>
+                            <constraint firstItem="ppZ-Y1-1gw" firstAttribute="bottom" secondItem="oWM-w7-BnR" secondAttribute="bottom" id="4rg-Iy-n9I"/>
+                            <constraint firstItem="ppZ-Y1-1gw" firstAttribute="trailing" secondItem="oWM-w7-BnR" secondAttribute="trailing" id="Suo-7o-rwg"/>
                             <constraint firstItem="Jef-9o-0bR" firstAttribute="centerY" secondItem="xVE-Vd-kvw" secondAttribute="centerY" id="bSD-vS-LuC"/>
                             <constraint firstItem="NHf-IS-pWR" firstAttribute="top" secondItem="ppZ-Y1-1gw" secondAttribute="top" constant="25" id="dt3-1t-hJu"/>
                             <constraint firstItem="Jef-9o-0bR" firstAttribute="centerX" secondItem="xVE-Vd-kvw" secondAttribute="centerX" id="fX4-Jl-i74"/>
                             <constraint firstItem="NHf-IS-pWR" firstAttribute="centerX" secondItem="xVE-Vd-kvw" secondAttribute="centerX" id="gQC-Yi-6X9"/>
+                            <constraint firstItem="oWM-w7-BnR" firstAttribute="leading" secondItem="ppZ-Y1-1gw" secondAttribute="leading" id="lb2-OR-x4v"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Als-Dx-Urx"/>
                     <connections>
                         <outlet property="spinner" destination="Jef-9o-0bR" id="5An-rc-cQu"/>
+                        <outlet property="tableView" destination="oWM-w7-BnR" id="Nco-Nf-eZu"/>
+                        <segue destination="hMW-Wp-tSg" kind="presentation" identifier="showProductDetails" id="ueW-nL-B1S"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dNB-Gs-YCJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2003" y="448"/>
+            <point key="canvasLocation" x="2002.8985507246377" y="447.554347826087"/>
+        </scene>
+        <!--Product Details View Controller-->
+        <scene sceneID="rHc-2I-8SN">
+            <objects>
+                <viewController id="hMW-Wp-tSg" customClass="ProductDetailsViewController" customModule="InternProducts" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="QKM-1U-0QS">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="gk5-YR-x4Z"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="W6f-j9-iB0"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Xub-LI-Tub" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2903" y="451"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
