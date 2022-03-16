@@ -15,6 +15,8 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var password: UITextField!
     @IBOutlet weak var confirmPassword: UITextField!
     @IBOutlet weak var passwordMismatchErrorLabel: UILabel!
+
+    private(set) public var loginToken = ""
     
     // MARK: - Overrides
     
@@ -27,6 +29,17 @@ class RegisterViewController: UIViewController {
         password.isSecureTextEntry = true
         confirmPassword.isSecureTextEntry = true
         passwordMismatchErrorLabel.isHidden = true
+    }
+
+    ///
+    /// Prepare for segue
+    ///
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == Constants.fromRegisterToProducts {
+            if let cvc = segue.destination as? ProductsViewController {
+                cvc.loginToken = loginToken
+            }
+        }
     }
     
     // MARK: - Button Actions
@@ -82,7 +95,8 @@ class RegisterViewController: UIViewController {
                         DispatchQueue.main.async {
                             // SUCCESS
                             if httpDataStatusResponse["status"] == "SUCCESS" {
-                                // TODO: Maybe store the login Token?
+                                // store & transmit in prepeare the logintToken
+                                self.loginToken = httpDataStatusResponse["loginToken"] ?? ""
                                 // proceed to display the products to screen
                                 self.performSegue(withIdentifier: Constants.fromRegisterToProducts, sender: nil)
                                 // FAIL
