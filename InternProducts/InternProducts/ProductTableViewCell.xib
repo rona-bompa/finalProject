@@ -32,8 +32,8 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tag, tag" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gK3-tv-kUh">
-                        <rect key="frame" x="101" y="131" width="50" height="17"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tag, tag" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gK3-tv-kUh">
+                        <rect key="frame" x="182" y="131" width="50" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -43,36 +43,27 @@
                     <constraint firstItem="YD0-FJ-wWm" firstAttribute="leading" secondItem="Iun-gZ-2jY" secondAttribute="trailing" constant="8" id="0gV-fS-f25"/>
                     <constraint firstItem="Iun-gZ-2jY" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="73W-SY-Fo0"/>
                     <constraint firstItem="Iun-gZ-2jY" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="7Uk-cQ-mcC"/>
+                    <constraint firstAttribute="bottom" secondItem="gK3-tv-kUh" secondAttribute="bottom" constant="37" id="9xQ-V7-dat"/>
                     <constraint firstItem="YD0-FJ-wWm" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="trailing" constant="8" id="Lo4-CU-zyk"/>
                     <constraint firstItem="YD0-FJ-wWm" firstAttribute="top" secondItem="Iun-gZ-2jY" secondAttribute="top" id="OEu-Ko-00i"/>
-                    <constraint firstItem="gK3-tv-kUh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="101" id="Pxo-ch-T2d"/>
+                    <constraint firstItem="gK3-tv-kUh" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="R7m-Jt-Vm8"/>
+                    <constraint firstItem="gK3-tv-kUh" firstAttribute="leading" relation="lessThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="182" id="UG2-94-wN6"/>
                     <constraint firstItem="gK3-tv-kUh" firstAttribute="top" secondItem="Iun-gZ-2jY" secondAttribute="bottom" constant="8" id="V1g-98-z50"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="wUW-Lo-Oqd" secondAttribute="trailing" constant="4" id="WmC-d4-DB4"/>
                     <constraint firstItem="wUW-Lo-Oqd" firstAttribute="bottom" secondItem="Iun-gZ-2jY" secondAttribute="bottom" id="avJ-yp-KeW"/>
-                    <constraint firstAttribute="trailing" secondItem="gK3-tv-kUh" secondAttribute="trailing" constant="263" id="cQ2-SF-Z7h"/>
                     <constraint firstItem="wUW-Lo-Oqd" firstAttribute="top" relation="greaterThanOrEqual" secondItem="YD0-FJ-wWm" secondAttribute="bottom" constant="4" id="i6g-aJ-m1U"/>
-                    <constraint firstAttribute="bottom" secondItem="gK3-tv-kUh" secondAttribute="bottom" constant="37" id="ieD-sN-LuZ"/>
+                    <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="gK3-tv-kUh" secondAttribute="trailing" constant="182" id="nH8-Pp-3vI"/>
                     <constraint firstItem="wUW-Lo-Oqd" firstAttribute="leading" secondItem="Iun-gZ-2jY" secondAttribute="trailing" constant="4" id="y79-5M-V7A"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="description" destination="wUW-Lo-Oqd" id="zKz-tK-PX2"/>
-                <outlet property="descriptionLabel" destination="wUW-Lo-Oqd" id="I68-46-AnB"/>
+                <outlet property="productDescription" destination="wUW-Lo-Oqd" id="5Cn-cq-FSU"/>
                 <outlet property="productImage" destination="Iun-gZ-2jY" id="VB7-oB-TyR"/>
-                <outlet property="tagLabel" destination="gK3-tv-kUh" id="bQY-z8-hqF"/>
-                <outlet property="title" destination="YD0-FJ-wWm" id="r1N-zy-bMT"/>
-                <outlet property="titleLabel" destination="YD0-FJ-wWm" id="f3I-Lf-Y0Q"/>
+                <outlet property="productTags" destination="gK3-tv-kUh" id="1CT-hs-m82"/>
+                <outlet property="productTitle" destination="YD0-FJ-wWm" id="gVD-Co-pOR"/>
             </connections>
             <point key="canvasLocation" x="153.62318840579712" y="138.95089285714286"/>
         </tableViewCell>
-        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rqf-fA-niV">
-            <rect key="frame" x="0.0" y="0.0" width="42" height="21"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-            <nil key="textColor"/>
-            <nil key="highlightedColor"/>
-            <point key="canvasLocation" x="158" y="26"/>
-        </label>
     </objects>
 </document>

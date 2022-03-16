@@ -16,7 +16,7 @@ class ProductsViewController: UIViewController {
     // FIXME: Some level of privacy for loginToken
     var loginToken = ""
     private var products = [Product]()
-    private var productsDictionary = [[String: Any]]() // the dictionary of products returned in case of "status": "SUCCES" from "products: [ { "title": String, "date": Int } ] etc.
+    //private var productsDictionary = [[String: Any]]() // the dictionary of products returned in case of "status": "SUCCES" from "products: [ { "title": String, "date": Int } ] etc.
 
     // MARK: - Overrides
     override func viewWillAppear(_ animated: Bool) {
@@ -26,9 +26,10 @@ class ProductsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.delegate = self
+        tableView.dataSource = self
         tableView.register(UINib(nibName: Constants.productTableViewCellId, bundle: nil), forCellReuseIdentifier: Constants.productCellId)
         downloadProductList()
-
     }
 
     // MARK: - Function Download
@@ -47,40 +48,27 @@ class ProductsViewController: UIViewController {
                         print("Expected 200 status code, but received: \(response.statusCode)")
                 /// data
                 } else if let data = data {
-                    do {
-                        guard let httpDataStatusResponse = try JSONSerialization.jsonObject(with: data, options: []) as? [String:Any] else {
-                            print("Data serialization error: Unexpected format received!")
+
+                    let decoder = JSONDecoder()
+                    guard let httpResponse = try? decoder.decode(Response.self, from: data) else {
+                        print("Data serialization error: Unexpected format received!")
+                        return
+                    }
+
+                    if httpResponse.status == "SUCCESS" {
+                        guard let productsHttpResponse = httpResponse.products else {
+                            print("No products returned")
                             return
                         }
-                            // SUCCESS
-                            if httpDataStatusResponse["status"] as? String == "SUCCESS" {
-                                do {
-                                    // or maybe httpDataStatusResponse["status"] de products?
-                                    guard let httpPorductDictionary = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else { // [ { "title" : "tags"}
-                                        print("Data serialization error: Unexpected format received")
-                                        return
-                                    }
-                                    self.productsDictionary = httpPorductDictionary["products"] as! [[String : Any]]
 
-                                    // FIXME: or maybe Data(httpProductDictionary)? Or a function to encode? check: https://www.codegrepper.com/code-examples/swift/swift+convert+dictionary+to+data
-                                    //self.products =  try self.codableDeserialization(for: self.productsDictionary)
+                        self.products = productsHttpResponse.sorted(by: {$0.date! < $1.date!}) // sorted by date
 
-                                    DispatchQueue.main.async {
-                                        self.spinner.stopAnimating()
-                                        self.tableView.reloadData()
-                                    }
-                                    print(self.productsDictionary)
-
-                                } catch {
-                                    print("Data serialization error: \(error)")
-                                }
-                                // FAIL
-                            } else if httpDataStatusResponse["status"] as? String == "FAILED" {
-                                print("Status: FAILED, error message: \(httpDataStatusResponse["messsage"] ?? "empty, no message")")
-                            }
-
-                    } catch {
-                        print("Data serialization error: \(error)")
+                        DispatchQueue.main.async {
+                            self.spinner.stopAnimating()
+                            self.tableView.reloadData()
+                        }
+                    } else if httpResponse.status == "FAILED" {
+                        print("Status: FAIED; Message: \(httpResponse.message!)")
                     }
 
                 } else {
@@ -90,19 +78,6 @@ class ProductsViewController: UIViewController {
             task.resume()
         }
     }
-
-    func codableDeserialization(for data: Data) throws -> [Product] {
-        let jsonDecoder = JSONDecoder()
-        let products = try jsonDecoder.decode([Product].self, from: data)
-        return products
-    }
-
-//    func productsDeserialization(for products: [[String: Any]]) throws -> [Product] {
-//        let jsonDecoder = JSONDecoder()
-//        let productsList = try jsonDecoder.decode([Product].self, from: products)
-//        return productsList
-//    }
-
 }
 
 // MARK: extension TableView DELEGATE
@@ -112,9 +87,8 @@ extension ProductsViewController: UITableViewDelegate {
         return 1
     }
 
-    // FIXME: products.count instead of 0
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return productsDictionary.count
+        return products.count
     }
 }
 
@@ -128,21 +102,22 @@ extension ProductsViewController: UITableViewDataSource {
             return UITableViewCell()
         }
 
-        let item = productsDictionary[indexPath.row]
+        let item = products[indexPath.row]
 
-        productCell.productTile.text = item["title"] as? String
-        productCell.productDescription.text = item["description"] as? String
+        productCell.productTitle.text = item.title
+        productCell.productDescription.text = item.description
 
-        let separatedTags = item["tags"] as? [String] ?? [""]
-        if separatedTags != [""] {
-            let joinedTags = separatedTags.joined(separator: ", ") // separating tags with ","
-            productCell.productTag.text = joinedTags
+        let separatedTags = item.tags
+        if separatedTags != nil { // sau [""]?
+            let joinedTags = separatedTags!.joined(separator: ", ") // separating tags with ","
+            productCell.productTags.text = joinedTags
         }
-        // productCell.productImage.image = ...
-        // productCell.prodctDate.date = ...
+
+//        let imageData = Data(base64Encoded: item.image!)
+//        if let imageData = imageData {
+//            productCell.productImage.image = UIImage(data: imageData)
+//        }
         return productCell
     }
-
-
     // maybe in prepeare for segue
 }
