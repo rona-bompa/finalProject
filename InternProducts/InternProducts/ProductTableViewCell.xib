@@ -16,8 +16,12 @@
                 <rect key="frame" x="0.0" y="0.0" width="414" height="185"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="125" placeholderIntrinsicHeight="115" translatesAutoresizingMaskIntoConstraints="NO" id="Iun-gZ-2jY">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Iun-gZ-2jY">
                         <rect key="frame" x="8" y="8" width="125" height="115"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="115" id="2UB-l1-MGG"/>
+                            <constraint firstAttribute="width" constant="125" id="oyk-AE-9GF"/>
+                        </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wUW-Lo-Oqd">
                         <rect key="frame" x="137" y="39" width="272" height="84"/>

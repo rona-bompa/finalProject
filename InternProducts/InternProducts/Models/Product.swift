@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import UIKit
 
 struct Response: Codable {
     let status: String
@@ -18,8 +17,6 @@ struct Product: Codable {
     let title: String
     let description: String
     let tags: [String]?
-
-    var image: String? //   UIImage? CustomImage?
-    var date: Int?
+    let image: String?
+    let date: Int?
 }
-

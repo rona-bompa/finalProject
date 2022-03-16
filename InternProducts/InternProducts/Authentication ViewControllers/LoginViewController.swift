@@ -1,5 +1,5 @@
 //
-//  RegisterViewController.swift
+//  LoginViewController.swift
 //  InternProducts
 //
 //  Created by Rona Bompa on 11.03.2022.
@@ -7,55 +7,58 @@
 
 import UIKit
 
-class RegisterViewController: UIViewController {
-
+class LoginViewController: UIViewController {
+    
     // MARK: - Outlets
+    
     @IBOutlet weak var username: UITextField!
     @IBOutlet weak var password: UITextField!
-    @IBOutlet weak var confirmPassword: UITextField!
-    @IBOutlet weak var passwordMismatchErrorLabel: UILabel!
-
+    
+    private(set) public var loginToken = ""
+    
     // MARK: - Overrides
+    
+    ///
+    /// View Did Load
+    ///
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         password.isSecureTextEntry = true
-        confirmPassword.isSecureTextEntry = true
-        passwordMismatchErrorLabel.isHidden = true
     }
-
-    // MARK: - Button Actions & Functions
-
+    
     ///
-    /// Resgister Button Action
+    /// Prepare for segue
     ///
-    @IBAction func register(_ sender: UIButton) {
-        // if all textFields are NOT empty
-        if username.text != "" && password.text != "" && confirmPassword.text != "" {
-            // if the passwords match
-            if password.text == confirmPassword.text {
-                passwordMismatchErrorLabel.isHidden = true
-
-                // HTTP Register Request
-                httpRegisterUser()
-            } else {
-                // passwords don't match
-                passwordMismatchErrorLabel.isHidden = false
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == Constants.fromLoginToProducts {
+            if let cvc = segue.destination as? ProductsViewController {
+                cvc.loginToken = loginToken
             }
         }
     }
-
+    
+    // MARK: - Button Actions
+    
     ///
-    /// HTTP Register User
+    /// Login Button Action
     ///
-    private func httpRegisterUser() {
-
+    @IBAction func login(_ sender: UIButton) {
+        // if all textFields are NOT empty
+        if username.text != "" && password.text != "" {
+            httpLoginUser()
+        }
+    }
+    
+    // MARK: - Functions
+    ///
+    /// HTTP Login User
+    ///
+    private func httpLoginUser() {
         let urlSession = URLSession(configuration: .default)
-        if let url = URL(string: "http://localhost:8080/register?username=\(username.text!)&password=\(password.text!)") {
-
-            /// closure apelat pe background thread by default
+        if let url = URL(string: "http://localhost:8080/login?username=\(username.text!)&password=\(password.text!)") {
             let task = urlSession.dataTask(with: url) { [weak self] data, response, error in
-                guard let self = self else { return } /// sa nu avem self?.___ si nici retainCount + 1
+                guard let self = self else { return }
                 /// error
                 if let error = error {
                     print("Request error received: \(error)")
@@ -74,13 +77,14 @@ class RegisterViewController: UIViewController {
                             print("Data serialization error: Unexpected format received!")
                             return
                         }
-
+                        
                         DispatchQueue.main.async {
                             // SUCCESS
                             if httpDataStatusResponse["status"] == "SUCCESS" {
-                                // TODO: Maybe store the login Token?
+                                // store & transmit in prepeare the logintToken
+                                self.loginToken = httpDataStatusResponse["loginToken"] ?? ""
                                 // proceed to display the products to screen
-                                self.performSegue(withIdentifier: Constants.fromRegisterToProducts, sender: nil)
+                                self.performSegue(withIdentifier: Constants.fromLoginToProducts, sender: nil)
                                 // FAIL
                             } else if httpDataStatusResponse["status"] == "FAILED" {
                                 // display error message in an Alert
@@ -97,7 +101,7 @@ class RegisterViewController: UIViewController {
             task.resume()
         }
     }
-
+    
     ///
     /// Show Alert
     ///
@@ -109,5 +113,4 @@ class RegisterViewController: UIViewController {
         // show the alert
         present(alert, animated: true)
     }
-
 }

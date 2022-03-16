@@ -8,7 +8,7 @@
 import Foundation
 
 struct Constants {
-
+    
     static let okHttpStatusCode = 200
 
     /// segues
