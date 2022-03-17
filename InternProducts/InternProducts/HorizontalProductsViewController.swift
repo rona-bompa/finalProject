@@ -10,8 +10,31 @@ import UIKit
 class HorizontalProductsViewController: UIViewController {
 
     enum LayoutMode: String {
-        case compact = "compact"
-        case expanded = "expanded"
+        case compact
+        case expanded
+
+        func getCellIdentifier() -> String {
+            switch self {
+            case .compact:
+                return Constants.compactCollectionViewCell
+
+            case .expanded:
+                return Constants.extendedCollectionViewCell
+            }
+        }
+
+
+        // FIXME: Factory Design Pattern? Lambda?
+//        func getClassCellIdentifier() -> UICollectionViewCell.Type {
+//            switch self {
+//            case .compact:
+//               // return CompactCollectionViewCell
+//
+//            case .expanded:
+//                //return ExtenededCollectionViewCell
+//            }
+//        }
+
     }
 
     // MARK: - Outlets
@@ -35,9 +58,10 @@ class HorizontalProductsViewController: UIViewController {
 
         collectionView.delegate = self
         collectionView.dataSource = self
-        // FIXME: - Collection View FlowLayoutDelegate?
 
-//        tableView.register(UINib(nibName: Constants.productTableViewCellId, bundle: nil), forCellReuseIdentifier: Constants.productCellId)
+        // enum - when
+        collectionView.register(UINib(nibName: layoutMode.getCellIdentifier(), bundle: nil), forCellWithReuseIdentifier: layoutMode.getCellIdentifier())
+
         httpGetProducts()
     }
 
@@ -138,41 +162,34 @@ extension HorizontalProductsViewController: UICollectionViewDelegate {
 ///
 extension HorizontalProductsViewController: UICollectionViewDataSource {
 
-    // FIXME: - Correct xib for the correct layout
+    // FIXME: - switch in enum, in order not to copy paste
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         /// switching the xib for
-        /*
-        switch layoutMode {
-        case .compact:
+
             // Vertical
-            guard let productCell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.productCellId, for: indexPath) as? ProductTableViewCell else {
-                print("UI error: Cell dequeue is unexpected instance!")
-                return UICollectionViewCell()
-            }
-            let item = products[indexPath.row]
-            productCell.productTitle.text = item.title
-            productCell.productDescription.text = item.description
-            productCell.productTags.text = stringArrayToStringWithCommas(item.tags!)
-            productCell.productImage.image = convertStringToImage(item.image!)
-            //return productCell
-
-        case .expanded:
-            // Horizontal
-            guard let productCell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.productCellId, for: indexPath) as? ProductTableViewCell else {
-                print("UI error: Cell dequeue is unexpected instance!")
-                return UICollectionViewCell()
-            }
-
-            let item = products[indexPath.row]
-            productCell.productTitle.text = item.title
-            productCell.productDescription.text = item.description
-            productCell.productTags.text = stringArrayToStringWithCommas(item.tags!)
-            productCell.productImage.image = convertStringToImage(item.image!)
-            //return productCell
+        if layoutMode == LayoutMode.compact {
+            guard let productCell = collectionView.dequeueReusableCell(withReuseIdentifier: layoutMode.getCellIdentifier(), for: indexPath) as? CompactCollectionViewCell else {
+                    print("UI error: Cell dequeue is unexpected instance!")
+                    return UICollectionViewCell()
+                }
+                let item = products[indexPath.row]
+                productCell.productTitle.text = item.title
+                productCell.productDescription.text = item.description
+                productCell.productTags.text = stringArrayToStringWithCommas(item.tags!)
+                productCell.productImage.image = convertStringToImage(item.image!)
+                return productCell
+        } else {
+            guard let productCell = collectionView.dequeueReusableCell(withReuseIdentifier: layoutMode.getCellIdentifier(), for: indexPath) as? ExtendedCollectionViewCell else {
+                    print("UI error: Cell dequeue is unexpected instance!")
+                    return UICollectionViewCell()
+                }
+                let item = products[indexPath.row]
+                productCell.productTitle.text = item.title
+                productCell.productDescription.text = item.description
+                productCell.productTags.text = stringArrayToStringWithCommas(item.tags!)
+                productCell.productImage.image = convertStringToImage(item.image!)
+                return productCell
         }
-         */
-
-        return UICollectionViewCell()
     }
 
 }

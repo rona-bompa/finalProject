@@ -12,8 +12,6 @@ struct Constants {
     static let okHttpStatusCode = 200
 
     /// segues identifiers
-    //static let fromRegisterToProducts = "fromRegisterToProducts"
-    //static let fromLoginToProducts = "fromLoginToProducts"
     static let fromProductToProductDetails = "fromProductToProductDetails"
     static let fromLoginToTabBarController = "fromLoginToTabBarController"
     static let fromRegisterToTabBarController = "fromRegisterToTabBarController"
