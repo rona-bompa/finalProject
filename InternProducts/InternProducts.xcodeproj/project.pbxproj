@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9323E54A27E323D800D5EAE4 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9323E54927E323D800D5EAE4 /* TabBarController.swift */; };
 		9346F02227E1F41B0073E7A3 /* ProductDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9346F02127E1F41B0073E7A3 /* ProductDetail.swift */; };
 		9346F02627E227CA0073E7A3 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9346F02527E227CA0073E7A3 /* SettingsViewController.swift */; };
 		935A4EA627DF3B980037AA23 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935A4EA527DF3B980037AA23 /* Constants.swift */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9323E54927E323D800D5EAE4 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		9346F02127E1F41B0073E7A3 /* ProductDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetail.swift; sourceTree = "<group>"; };
 		9346F02527E227CA0073E7A3 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = InternProducts/SettingsViewController.swift; sourceTree = SOURCE_ROOT; };
 		935A4EA527DF3B980037AA23 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -67,6 +69,7 @@
 		9346F02427E1F48C0073E7A3 /* Products ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				9323E54927E323D800D5EAE4 /* TabBarController.swift */,
 				9346F02527E227CA0073E7A3 /* SettingsViewController.swift */,
 				935A4EA727DF59DD0037AA23 /* ProductsViewController.swift */,
 				935A4EAB27DFAEC40037AA23 /* ProductDetailsViewController.swift */,
@@ -202,6 +205,7 @@
 				93E3E2E327DB7C550007B3B5 /* AppDelegate.swift in Sources */,
 				9346F02627E227CA0073E7A3 /* SettingsViewController.swift in Sources */,
 				935A4EA927DF59DD0037AA23 /* ProductsViewController.swift in Sources */,
+				9323E54A27E323D800D5EAE4 /* TabBarController.swift in Sources */,
 				93E3E2E527DB7C550007B3B5 /* SceneDelegate.swift in Sources */,
 				935A4EA627DF3B980037AA23 /* Constants.swift in Sources */,
 				935A4EAC27DFAEC40037AA23 /* ProductDetailsViewController.swift in Sources */,

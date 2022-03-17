@@ -23,7 +23,8 @@ class ProductsViewController: UIViewController {
     ///
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationItem.setHidesBackButton(true, animated: true)
+//        self.navigationItem.leftBarButtonItem = nil
+//        self.navigationItem.hidesBackButton = true
     }
     
     ///
@@ -31,6 +32,8 @@ class ProductsViewController: UIViewController {
     ///
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.setHidesBackButton(true, animated: true)
+
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: Constants.productTableViewCellId, bundle: nil), forCellReuseIdentifier: Constants.productCellId)

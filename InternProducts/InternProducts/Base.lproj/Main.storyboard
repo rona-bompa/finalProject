@@ -372,7 +372,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="psv-wP-PSv">
             <objects>
-                <tabBarController id="zfD-YO-Tsi" sceneMemberID="viewController">
+                <tabBarController id="zfD-YO-Tsi" customClass="TabBarController" customModule="InternProducts" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="xtT-fB-h91"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="rgu-0J-14u">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>

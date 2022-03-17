@@ -1,22 +1,20 @@
 //
-//  SettingsViewController.swift
+//  TabBarViewController.swift
 //  InternProducts
 //
-//  Created by Rona Bompa on 16.03.2022.
+//  Created by Rona Bompa on 17.03.2022.
 //
 
 import UIKit
 
-class SettingsViewController: UIViewController {
-
-    // MARK: - Outlets
-    @IBOutlet weak var segmentedControl: UISegmentedControl!
-
+class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.setHidesBackButton(true, animated: true)
 
+        self.navigationItem.leftBarButtonItem = nil
+        self.navigationItem.hidesBackButton = true
+        self.navigationItem.setHidesBackButton(true, animated: true)
         // Do any additional setup after loading the view.
     }
     
