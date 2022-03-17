@@ -21,6 +21,8 @@ struct Constants {
     /// identifiers
     static let productTableViewCellId = "ProductTableViewCell"
     static let productCellId = "productCell"
+    static let compactCollectionViewCell = "compactCollectionViewCell"
+    static let extendedCollectionViewCell = "extendedCollectionViewCell"
 
     /// loginToken
     static var loginToken = ""

@@ -12,7 +12,6 @@ class SettingsViewController: UIViewController {
     // MARK: - Outlets
     @IBOutlet weak var segmentedControl: UISegmentedControl!
 
-
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.setHidesBackButton(true, animated: true)

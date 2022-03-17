@@ -15,7 +15,6 @@ class TabBarController: UITabBarController {
         self.navigationItem.leftBarButtonItem = nil
         self.navigationItem.hidesBackButton = true
         self.navigationItem.setHidesBackButton(true, animated: true)
-        // Do any additional setup after loading the view.
     }
     
 

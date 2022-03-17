@@ -188,6 +188,55 @@
             </objects>
             <point key="canvasLocation" x="92.753623188405811" y="91.304347826086968"/>
         </scene>
+        <!--Horizontal-->
+        <scene sceneID="KL1-Xd-Y59">
+            <objects>
+                <viewController id="B6i-Fs-Yu2" customClass="HorizontalProductsViewController" customModule="InternProducts" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="w9r-wx-OCT">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="jAU-vC-wTm">
+                                <rect key="frame" x="188.66666666666666" y="349.66666666666669" width="37" height="37"/>
+                            </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Products" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mfx-TU-Shg">
+                                <rect key="frame" x="125.66666666666669" y="69" width="163" height="48"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="40"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Fii-b8-TnO">
+                                <rect key="frame" x="20" y="149" width="374" height="567"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Skh-9o-Lvh">
+                                    <size key="itemSize" width="132" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="q7G-4u-bGC"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="mfx-TU-Shg" firstAttribute="centerX" secondItem="w9r-wx-OCT" secondAttribute="centerX" id="1Bj-bE-dZo"/>
+                            <constraint firstItem="jAU-vC-wTm" firstAttribute="centerX" secondItem="w9r-wx-OCT" secondAttribute="centerX" id="ANF-fG-eiE"/>
+                            <constraint firstItem="mfx-TU-Shg" firstAttribute="top" secondItem="q7G-4u-bGC" secondAttribute="top" constant="25" id="lk9-Bo-SJb"/>
+                            <constraint firstItem="jAU-vC-wTm" firstAttribute="centerY" secondItem="w9r-wx-OCT" secondAttribute="centerY" id="rD9-w0-3Sh"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Horizontal" id="CN2-4J-oGW"/>
+                    <connections>
+                        <outlet property="collectionView" destination="Fii-b8-TnO" id="BuN-30-7OZ"/>
+                        <outlet property="spinner" destination="jAU-vC-wTm" id="aeO-bm-7yJ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UM2-yb-e4e" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3105.7971014492755" y="-554.34782608695662"/>
+        </scene>
         <!--Products-->
         <scene sceneID="Gk9-dE-dTU">
             <objects>
@@ -382,6 +431,7 @@
                     <connections>
                         <segue destination="R1E-1g-MJ8" kind="relationship" relationship="viewControllers" id="2P2-35-jXn"/>
                         <segue destination="6TQ-73-QoZ" kind="relationship" relationship="viewControllers" id="pGm-I5-CxE"/>
+                        <segue destination="B6i-Fs-Yu2" kind="relationship" relationship="viewControllers" id="v9v-wP-Zw5"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r0i-WZ-wGD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
