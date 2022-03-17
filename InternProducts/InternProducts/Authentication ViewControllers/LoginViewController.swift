@@ -14,8 +14,6 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var username: UITextField!
     @IBOutlet weak var password: UITextField!
     
-    private(set) public var loginToken = ""
-    
     // MARK: - Overrides
     
     ///
@@ -23,17 +21,16 @@ class LoginViewController: UIViewController {
     ///
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         password.isSecureTextEntry = true
     }
-    
+
     ///
     /// Prepare for segue
     ///
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == Constants.fromLoginToProducts {
-            if let cvc = segue.destination as? ProductsViewController {
-                cvc.loginToken = loginToken
+        if segue.identifier == Constants.fromRegisterToTabBarController {
+            if let cvc = segue.destination as? UITabBarController {
+                cvc.navigationItem.setHidesBackButton(true, animated: true)
             }
         }
     }
@@ -82,9 +79,9 @@ class LoginViewController: UIViewController {
                             // SUCCESS
                             if httpDataStatusResponse["status"] == "SUCCESS" {
                                 // store & transmit in prepeare the logintToken
-                                self.loginToken = httpDataStatusResponse["loginToken"] ?? ""
+                                Constants.loginToken = httpDataStatusResponse["loginToken"] ?? ""
                                 // proceed to display the products to screen
-                                self.performSegue(withIdentifier: Constants.fromLoginToProducts, sender: nil)
+                                self.performSegue(withIdentifier: Constants.fromLoginToTabBarController, sender: nil)
                                 // FAIL
                             } else if httpDataStatusResponse["status"] == "FAILED" {
                                 // display error message in an Alert

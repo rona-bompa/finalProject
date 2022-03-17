@@ -16,7 +16,6 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var confirmPassword: UITextField!
     @IBOutlet weak var passwordMismatchErrorLabel: UILabel!
 
-    private(set) public var loginToken = ""
     
     // MARK: - Overrides
     
@@ -35,13 +34,13 @@ class RegisterViewController: UIViewController {
     /// Prepare for segue
     ///
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == Constants.fromRegisterToProducts {
-            if let cvc = segue.destination as? ProductsViewController {
-                cvc.loginToken = loginToken
+        if segue.identifier == Constants.fromRegisterToTabBarController {
+            if let cvc = segue.destination as? UITabBarController {
+                cvc.navigationItem.setHidesBackButton(true, animated: true)
             }
         }
     }
-    
+
     // MARK: - Button Actions
     
     ///
@@ -96,9 +95,9 @@ class RegisterViewController: UIViewController {
                             // SUCCESS
                             if httpDataStatusResponse["status"] == "SUCCESS" {
                                 // store & transmit in prepeare the logintToken
-                                self.loginToken = httpDataStatusResponse["loginToken"] ?? ""
+                                Constants.loginToken = httpDataStatusResponse["loginToken"] ?? ""
                                 // proceed to display the products to screen
-                                self.performSegue(withIdentifier: Constants.fromRegisterToProducts, sender: nil)
+                                self.performSegue(withIdentifier: Constants.fromRegisterToTabBarController, sender: nil)
                                 // FAIL
                             } else if httpDataStatusResponse["status"] == "FAILED" {
                                 // display error message in an Alert

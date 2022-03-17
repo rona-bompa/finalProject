@@ -11,13 +11,18 @@ struct Constants {
     
     static let okHttpStatusCode = 200
 
-    /// segues
-    static let fromRegisterToProducts = "fromRegisterToProducts"
-    static let fromLoginToProducts = "fromLoginToProducts"
+    /// segues identifiers
+    //static let fromRegisterToProducts = "fromRegisterToProducts"
+    //static let fromLoginToProducts = "fromLoginToProducts"
     static let fromProductToProductDetails = "fromProductToProductDetails"
+    static let fromLoginToTabBarController = "fromLoginToTabBarController"
+    static let fromRegisterToTabBarController = "fromRegisterToTabBarController"
 
-    /// class names
+    /// identifiers
     static let productTableViewCellId = "ProductTableViewCell"
     static let productCellId = "productCell"
+
+    /// loginToken
+    static var loginToken = ""
 
 }

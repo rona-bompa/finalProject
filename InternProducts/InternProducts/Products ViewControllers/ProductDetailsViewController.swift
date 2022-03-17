@@ -28,7 +28,6 @@ class ProductDetailsViewController: UIViewController {
     ///
     @IBAction func closeButton(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
-        
     }
     
     // MARK: - Overrides

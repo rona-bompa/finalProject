@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9346F02227E1F41B0073E7A3 /* ProductDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9346F02127E1F41B0073E7A3 /* ProductDetail.swift */; };
+		9346F02627E227CA0073E7A3 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9346F02527E227CA0073E7A3 /* SettingsViewController.swift */; };
 		935A4EA627DF3B980037AA23 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935A4EA527DF3B980037AA23 /* Constants.swift */; };
 		935A4EA927DF59DD0037AA23 /* ProductsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935A4EA727DF59DD0037AA23 /* ProductsViewController.swift */; };
 		935A4EAC27DFAEC40037AA23 /* ProductDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935A4EAB27DFAEC40037AA23 /* ProductDetailsViewController.swift */; };
@@ -25,6 +26,7 @@
 
 /* Begin PBXFileReference section */
 		9346F02127E1F41B0073E7A3 /* ProductDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetail.swift; sourceTree = "<group>"; };
+		9346F02527E227CA0073E7A3 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = InternProducts/SettingsViewController.swift; sourceTree = SOURCE_ROOT; };
 		935A4EA527DF3B980037AA23 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		935A4EA727DF59DD0037AA23 /* ProductsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsViewController.swift; sourceTree = "<group>"; };
 		935A4EAB27DFAEC40037AA23 /* ProductDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsViewController.swift; sourceTree = "<group>"; };
@@ -65,6 +67,7 @@
 		9346F02427E1F48C0073E7A3 /* Products ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				9346F02527E227CA0073E7A3 /* SettingsViewController.swift */,
 				935A4EA727DF59DD0037AA23 /* ProductsViewController.swift */,
 				935A4EAB27DFAEC40037AA23 /* ProductDetailsViewController.swift */,
 			);
@@ -197,6 +200,7 @@
 			files = (
 				93E3E2FA27DB7D720007B3B5 /* LoginViewController.swift in Sources */,
 				93E3E2E327DB7C550007B3B5 /* AppDelegate.swift in Sources */,
+				9346F02627E227CA0073E7A3 /* SettingsViewController.swift in Sources */,
 				935A4EA927DF59DD0037AA23 /* ProductsViewController.swift in Sources */,
 				93E3E2E527DB7C550007B3B5 /* SceneDelegate.swift in Sources */,
 				935A4EA627DF3B980037AA23 /* Constants.swift in Sources */,

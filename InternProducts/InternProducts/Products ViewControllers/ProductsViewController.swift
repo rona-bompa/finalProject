@@ -13,8 +13,7 @@ class ProductsViewController: UIViewController {
     
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var tableView: UITableView!
-    
-    var loginToken = ""
+
     private var products = [Product]()
     private var productDetail = ProductDetail()
     
@@ -57,7 +56,7 @@ class ProductsViewController: UIViewController {
     private func httpGetProducts() {
         spinner.startAnimating()
         let urlSession = URLSession(configuration: .default)
-        if let url = URL(string: "http://localhost:8080/products?loginToken=\(loginToken)") {
+        if let url = URL(string: "http://localhost:8080/products?loginToken=\(Constants.loginToken)") {
             
             let task = urlSession.dataTask(with: url) { [weak self] data, response, error in
                 guard let self = self else { return }
