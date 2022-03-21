@@ -188,15 +188,15 @@
             </objects>
             <point key="canvasLocation" x="92.753623188405811" y="91.304347826086968"/>
         </scene>
-        <!--Horizontal-->
+        <!--Products-->
         <scene sceneID="KL1-Xd-Y59">
             <objects>
-                <viewController id="B6i-Fs-Yu2" customClass="HorizontalProductsViewController" customModule="InternProducts" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="B6i-Fs-Yu2" customClass="ProductsViewController" customModule="InternProducts" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="w9r-wx-OCT">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" bounces="NO" alwaysBounceVertical="YES" alwaysBounceHorizontal="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" contentInsetAdjustmentBehavior="never" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Fii-b8-TnO">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" contentInsetAdjustmentBehavior="never" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Fii-b8-TnO">
                                 <rect key="frame" x="0.0" y="167" width="414" height="520"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="dHS-O0-bQv">
@@ -230,62 +230,16 @@
                             <constraint firstItem="Fii-b8-TnO" firstAttribute="leading" secondItem="q7G-4u-bGC" secondAttribute="leading" id="x7T-aZ-Jkd"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Horizontal" id="CN2-4J-oGW"/>
+                    <tabBarItem key="tabBarItem" title="Products" id="CN2-4J-oGW"/>
                     <connections>
                         <outlet property="collectionView" destination="Fii-b8-TnO" id="BuN-30-7OZ"/>
                         <outlet property="spinner" destination="jAU-vC-wTm" id="aeO-bm-7yJ"/>
+                        <segue destination="hMW-Wp-tSg" kind="presentation" identifier="fromProductToProductDetails" id="mxg-68-iHV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UM2-yb-e4e" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3096" y="-638"/>
-        </scene>
-        <!--Products-->
-        <scene sceneID="Gk9-dE-dTU">
-            <objects>
-                <viewController id="R1E-1g-MJ8" customClass="ProductsViewController" customModule="InternProducts" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="xVE-Vd-kvw">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Products" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NHf-IS-pWR">
-                                <rect key="frame" x="125.66666666666669" y="69" width="163" height="48"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="40"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="oWM-w7-BnR">
-                                <rect key="frame" x="0.0" y="167" width="414" height="520"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            </tableView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="Jef-9o-0bR">
-                                <rect key="frame" x="188.66666666666666" y="349.66666666666669" width="37" height="37"/>
-                            </activityIndicatorView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="ppZ-Y1-1gw"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="oWM-w7-BnR" firstAttribute="top" secondItem="NHf-IS-pWR" secondAttribute="bottom" constant="50" id="0Aj-wi-Zxy"/>
-                            <constraint firstItem="ppZ-Y1-1gw" firstAttribute="bottom" secondItem="oWM-w7-BnR" secondAttribute="bottom" id="4rg-Iy-n9I"/>
-                            <constraint firstItem="ppZ-Y1-1gw" firstAttribute="trailing" secondItem="oWM-w7-BnR" secondAttribute="trailing" id="Suo-7o-rwg"/>
-                            <constraint firstItem="Jef-9o-0bR" firstAttribute="centerY" secondItem="xVE-Vd-kvw" secondAttribute="centerY" id="bSD-vS-LuC"/>
-                            <constraint firstItem="NHf-IS-pWR" firstAttribute="top" secondItem="ppZ-Y1-1gw" secondAttribute="top" constant="25" id="dt3-1t-hJu"/>
-                            <constraint firstItem="Jef-9o-0bR" firstAttribute="centerX" secondItem="xVE-Vd-kvw" secondAttribute="centerX" id="fX4-Jl-i74"/>
-                            <constraint firstItem="NHf-IS-pWR" firstAttribute="centerX" secondItem="xVE-Vd-kvw" secondAttribute="centerX" id="gQC-Yi-6X9"/>
-                            <constraint firstItem="oWM-w7-BnR" firstAttribute="leading" secondItem="ppZ-Y1-1gw" secondAttribute="leading" id="lb2-OR-x4v"/>
-                        </constraints>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Products" id="p5b-30-Eaj"/>
-                    <navigationItem key="navigationItem" id="Als-Dx-Urx"/>
-                    <connections>
-                        <outlet property="spinner" destination="Jef-9o-0bR" id="5An-rc-cQu"/>
-                        <outlet property="tableView" destination="oWM-w7-BnR" id="Nco-Nf-eZu"/>
-                        <segue destination="hMW-Wp-tSg" kind="presentation" identifier="fromProductToProductDetails" id="kU4-4d-CUL"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dNB-Gs-YCJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3097" y="200"/>
+            <point key="canvasLocation" x="3201" y="220"/>
         </scene>
         <!--Product Details View Controller-->
         <scene sceneID="rHc-2I-8SN">
@@ -368,7 +322,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xub-LI-Tub" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4078" y="200"/>
+            <point key="canvasLocation" x="4161" y="219"/>
         </scene>
         <!--Settings-->
         <scene sceneID="NI6-KQ-CNE">
@@ -422,7 +376,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fpk-IO-bin" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3096" y="1067"/>
+            <point key="canvasLocation" x="3200" y="1065"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="psv-wP-PSv">
@@ -435,9 +389,8 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="R1E-1g-MJ8" kind="relationship" relationship="viewControllers" id="2P2-35-jXn"/>
-                        <segue destination="6TQ-73-QoZ" kind="relationship" relationship="viewControllers" id="pGm-I5-CxE"/>
                         <segue destination="B6i-Fs-Yu2" kind="relationship" relationship="viewControllers" id="v9v-wP-Zw5"/>
+                        <segue destination="6TQ-73-QoZ" kind="relationship" relationship="viewControllers" id="pGm-I5-CxE"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r0i-WZ-wGD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

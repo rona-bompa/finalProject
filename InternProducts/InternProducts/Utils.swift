@@ -7,30 +7,34 @@
 
 import Foundation
 
+///
+/// Constants - segue identifiers
+///
 struct Constants {
-    
     static let okHttpStatusCode = 200
-
     /// segues identifiers
+
     static let fromProductToProductDetails = "fromProductToProductDetails"
     static let fromLoginToTabBarController = "fromLoginToTabBarController"
     static let fromRegisterToTabBarController = "fromRegisterToTabBarController"
-
     /// identifiers
     static let productTableViewCellId = "ProductTableViewCell"
     static let productCellId = "ProductCell"
 }
 
-struct SessionVariables {
+///
+/// Session Variables - login token & layout mode
+///
+class SessionVariables {
     /// loginToken
     static var loginToken = ""
-
-    /// layout mode
-    static var layoutMode = LayoutMode.compact
 }
 
+///
+/// Layout Mode - compact or expanded
+///
 enum LayoutMode: String {
-    case compact
-    case expanded
+    case compact = "compact"
+    case expanded = "expanded"
 }
 

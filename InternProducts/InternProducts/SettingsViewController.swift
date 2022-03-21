@@ -9,17 +9,12 @@ import UIKit
 
 class SettingsViewController: UIViewController {
 
-    // MARK: - Outlets
     @IBOutlet weak var segmentedControl: UISegmentedControl!
 
     @IBAction func segmentedControl(_ sender: UISegmentedControl) {
         switch segmentedControl.selectedSegmentIndex {
-        case 0:
-           // layoutMode = Constants.LayoutMode.compact
-            break
-        case 1:
-           // HorizontalProductsViewController.layoutMode = Constants.LayoutMode.expanded
-            break
+        case 0: UserDefaults.standard.set(LayoutMode.compact.rawValue, forKey: "layoutMode")
+        case 1: UserDefaults.standard.set(LayoutMode.expanded.rawValue, forKey: "layoutMode")
         default: break
         }
     }
