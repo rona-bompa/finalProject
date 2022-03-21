@@ -81,7 +81,7 @@ class LoginViewController: UIViewController {
                             // SUCCESS
                             if httpDataStatusResponse["status"] == "SUCCESS" {
                                 // store & transmit in prepeare the logintToken
-                                Constants.loginToken = httpDataStatusResponse["loginToken"] ?? ""
+                                SessionVariables.loginToken = httpDataStatusResponse["loginToken"] ?? ""
                                 // proceed to display the products to screen
                                 self.performSegue(withIdentifier: Constants.fromLoginToTabBarController, sender: nil)
                                 // FAIL

@@ -18,11 +18,19 @@ struct Constants {
 
     /// identifiers
     static let productTableViewCellId = "ProductTableViewCell"
-    static let productCellId = "productCell"
-    static let compactCollectionViewCell = "compactCollectionViewCell"
-    static let extendedCollectionViewCell = "extendedCollectionViewCell"
+    static let productCellId = "ProductCell"
+}
 
+struct SessionVariables {
     /// loginToken
     static var loginToken = ""
 
+    /// layout mode
+    static var layoutMode = LayoutMode.compact
 }
+
+enum LayoutMode: String {
+    case compact
+    case expanded
+}
+

@@ -196,6 +196,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" bounces="NO" alwaysBounceVertical="YES" alwaysBounceHorizontal="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" contentInsetAdjustmentBehavior="never" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Fii-b8-TnO">
+                                <rect key="frame" x="0.0" y="167" width="414" height="520"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="dHS-O0-bQv">
+                                    <size key="itemSize" width="414" height="185"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="jAU-vC-wTm">
                                 <rect key="frame" x="188.66666666666666" y="349.66666666666669" width="37" height="37"/>
                             </activityIndicatorView>
@@ -205,26 +216,18 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Fii-b8-TnO">
-                                <rect key="frame" x="20" y="149" width="374" height="567"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Skh-9o-Lvh">
-                                    <size key="itemSize" width="132" height="128"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells/>
-                            </collectionView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="q7G-4u-bGC"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="mfx-TU-Shg" firstAttribute="centerX" secondItem="w9r-wx-OCT" secondAttribute="centerX" id="1Bj-bE-dZo"/>
+                            <constraint firstItem="Fii-b8-TnO" firstAttribute="top" secondItem="mfx-TU-Shg" secondAttribute="bottom" constant="50" id="4OF-YP-0ic"/>
                             <constraint firstItem="jAU-vC-wTm" firstAttribute="centerX" secondItem="w9r-wx-OCT" secondAttribute="centerX" id="ANF-fG-eiE"/>
+                            <constraint firstItem="Fii-b8-TnO" firstAttribute="trailing" secondItem="q7G-4u-bGC" secondAttribute="trailing" id="ZJd-1c-p64"/>
                             <constraint firstItem="mfx-TU-Shg" firstAttribute="top" secondItem="q7G-4u-bGC" secondAttribute="top" constant="25" id="lk9-Bo-SJb"/>
                             <constraint firstItem="jAU-vC-wTm" firstAttribute="centerY" secondItem="w9r-wx-OCT" secondAttribute="centerY" id="rD9-w0-3Sh"/>
+                            <constraint firstItem="Fii-b8-TnO" firstAttribute="bottom" secondItem="q7G-4u-bGC" secondAttribute="bottom" id="uw5-Pf-y5i"/>
+                            <constraint firstItem="Fii-b8-TnO" firstAttribute="leading" secondItem="q7G-4u-bGC" secondAttribute="leading" id="x7T-aZ-Jkd"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Horizontal" id="CN2-4J-oGW"/>
@@ -235,7 +238,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UM2-yb-e4e" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3105.7971014492755" y="-554.34782608695662"/>
+            <point key="canvasLocation" x="3096" y="-638"/>
         </scene>
         <!--Products-->
         <scene sceneID="Gk9-dE-dTU">
@@ -393,6 +396,9 @@
                                     <segment title="Compact"/>
                                     <segment title="Expanded"/>
                                 </segments>
+                                <connections>
+                                    <action selector="segmentedControl:" destination="6TQ-73-QoZ" eventType="valueChanged" id="gFG-ba-bMD"/>
+                                </connections>
                             </segmentedControl>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ubj-qI-8al"/>
@@ -416,7 +422,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fpk-IO-bin" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3023" y="1203"/>
+            <point key="canvasLocation" x="3096" y="1067"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="psv-wP-PSv">

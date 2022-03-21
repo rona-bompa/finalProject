@@ -9,34 +9,6 @@ import UIKit
 
 class HorizontalProductsViewController: UIViewController {
 
-    enum LayoutMode: String {
-        case compact
-        case expanded
-
-        func getCellIdentifier() -> String {
-            switch self {
-            case .compact:
-                return Constants.compactCollectionViewCell
-
-            case .expanded:
-                return Constants.extendedCollectionViewCell
-            }
-        }
-
-
-        // FIXME: Factory Design Pattern? Lambda?
-//        func getClassCellIdentifier() -> UICollectionViewCell.Type {
-//            switch self {
-//            case .compact:
-//               // return CompactCollectionViewCell
-//
-//            case .expanded:
-//                //return ExtenededCollectionViewCell
-//            }
-//        }
-
-    }
-
     // MARK: - Outlets
 
     @IBOutlet weak var spinner: UIActivityIndicatorView!
@@ -44,9 +16,8 @@ class HorizontalProductsViewController: UIViewController {
 
     private var products = [Product]()
     private var productDetail = ProductDetail()
-
-    private var layoutMode = LayoutMode.compact
-
+    var layoutMode = SessionVariables.layoutMode
+    
     // MARK: - Overrides
 
     ///
@@ -59,11 +30,15 @@ class HorizontalProductsViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
 
-        // enum - when
-        collectionView.register(UINib(nibName: layoutMode.getCellIdentifier(), bundle: nil), forCellWithReuseIdentifier: layoutMode.getCellIdentifier())
+        collectionView.register(UINib(nibName: String(describing: CompactCollectionViewCell.self), bundle: nil), forCellWithReuseIdentifier: String(describing: CompactCollectionViewCell.self))
 
+        collectionView.register(UINib(nibName: String(describing: ExtendedCollectionViewCell.self), bundle: nil), forCellWithReuseIdentifier: String(describing: ExtendedCollectionViewCell.self))
+
+        layoutFlowMode()
         httpGetProducts()
     }
+
+
 
     // MARK: - Functions
 
@@ -73,7 +48,7 @@ class HorizontalProductsViewController: UIViewController {
     private func httpGetProducts() {
         spinner.startAnimating()
         let urlSession = URLSession(configuration: .default)
-        if let url = URL(string: "http://localhost:8080/products?loginToken=\(Constants.loginToken)") {
+        if let url = URL(string: "http://localhost:8080/products?loginToken=\(SessionVariables.loginToken)") {
 
             let task = urlSession.dataTask(with: url) { [weak self] data, response, error in
                 guard let self = self else { return }
@@ -101,8 +76,8 @@ class HorizontalProductsViewController: UIViewController {
                         self.products = productsHttpResponse.sorted(by: {$0.date! < $1.date!}) // sorted by date
 
                         DispatchQueue.main.async {
-                            self.spinner.stopAnimating()
                             self.collectionView.reloadData()
+                            self.spinner.stopAnimating()
                         }
                         // if FAILED, show message
                     } else if httpResponse.status == "FAILED" {
@@ -148,13 +123,14 @@ class HorizontalProductsViewController: UIViewController {
 /// extension CollectionView DELEGATE
 ///
 extension HorizontalProductsViewController: UICollectionViewDelegate {
-    ///
-    /// Number Of Items In Section  -
-    ///
+
+//    func numberOfSections(_ collectionView: UICollectionView) -> Int {
+//        return 1
+//    }
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return products.count
     }
-
 }
 
 ///
@@ -167,8 +143,8 @@ extension HorizontalProductsViewController: UICollectionViewDataSource {
         /// switching the xib for
 
             // Vertical
-        if layoutMode == LayoutMode.compact {
-            guard let productCell = collectionView.dequeueReusableCell(withReuseIdentifier: layoutMode.getCellIdentifier(), for: indexPath) as? CompactCollectionViewCell else {
+        if self.layoutMode == LayoutMode.compact {
+            guard let productCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: CompactCollectionViewCell.self), for: indexPath) as? CompactCollectionViewCell else {
                     print("UI error: Cell dequeue is unexpected instance!")
                     return UICollectionViewCell()
                 }
@@ -179,7 +155,8 @@ extension HorizontalProductsViewController: UICollectionViewDataSource {
                 productCell.productImage.image = convertStringToImage(item.image!)
                 return productCell
         } else {
-            guard let productCell = collectionView.dequeueReusableCell(withReuseIdentifier: layoutMode.getCellIdentifier(), for: indexPath) as? ExtendedCollectionViewCell else {
+            // Horizontal
+            guard let productCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ExtendedCollectionViewCell.self), for: indexPath) as? ExtendedCollectionViewCell else {
                     print("UI error: Cell dequeue is unexpected instance!")
                     return UICollectionViewCell()
                 }
@@ -191,7 +168,6 @@ extension HorizontalProductsViewController: UICollectionViewDataSource {
                 return productCell
         }
     }
-
 }
 
 
@@ -199,5 +175,22 @@ extension HorizontalProductsViewController: UICollectionViewDataSource {
 /// extension CollectionView FLOW LAYOUT
 ///
 extension HorizontalProductsViewController: UICollectionViewDelegateFlowLayout {
+
+    private func layoutFlowMode() {
+        // compact
+        if layoutMode == LayoutMode.compact {
+                    if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+                        layout.scrollDirection = .vertical
+                        layout.itemSize = CGSize(width: view.frame.width, height: 185)
+                    }
+        } else {
+            // extended
+            if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+                layout.scrollDirection = .horizontal
+                layout.itemSize = CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
+            }
+        }
+
+    }
 
 }
