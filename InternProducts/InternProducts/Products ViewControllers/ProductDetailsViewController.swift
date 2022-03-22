@@ -24,7 +24,7 @@ class ProductDetailsViewController: UIViewController {
     
     // MARK: - Button Actions
     ///
-    /// Close
+    /// Close Button Action
     ///
     @IBAction func closeButton(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)

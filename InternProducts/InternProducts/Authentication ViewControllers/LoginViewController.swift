@@ -10,7 +10,6 @@ import UIKit
 class LoginViewController: UIViewController {
     
     // MARK: - Outlets
-    
     @IBOutlet weak var username: UITextField!
     @IBOutlet weak var password: UITextField!
     
@@ -30,8 +29,6 @@ class LoginViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Constants.fromRegisterToTabBarController {
             if let cvc = segue.destination as? TabBarController {
-                cvc.navigationItem.leftBarButtonItem = nil
-                cvc.navigationItem.hidesBackButton = true
                 cvc.navigationItem.setHidesBackButton(true, animated: true)
             }
         }

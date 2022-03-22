@@ -13,50 +13,49 @@ class ProductsViewController: UIViewController {
 
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var searchTextField: UITextField!
+    @IBOutlet weak var sortButton: UIButton!
+    var messageLabel = UILabel()
 
-    // products of the filtered list
+    // MARK: - Variables
+
+    /// products of the filtered list
     private var products = [Product]()
-    // all products from http get request
+    /// all products from http get request
     private var allProducts = [Product]()
-
+    /// productDetail to be shown in ProductDetailsViewController
     private var productDetail = ProductDetail()
+
     var layoutMode = LayoutMode.compact
     private var sortedAsc = true
 
-    @IBOutlet weak var searchTextField: UITextField!
-    @IBOutlet weak var sortButton: UIButton!
+    let imageArrowAsc = UIImage(named: "arrow-asc.png")
+    let imageArrowDesc = UIImage(named: "arrow-desc.png")
 
+
+    // MARK: - Actions - filter & sort
+    ///
+    ///  Search TextField Action
+    ///
     @IBAction func searchTextField(_ sender: UITextField) {
         if let searchedString = searchTextField.text {
             products = (searchedString == "") ? allProducts : allProducts.filter {
-                $0.title.contains(searchedString) || $0.description.contains(searchedString) || exactMatch(tags: $0.tags!, searchedString: searchedString)
-            }
+                $0.title.contains(searchedString) ||
+                $0.description.contains(searchedString) ||
+                $0.tags!.containsExactMatchToElement(element: searchedString)
+                }
             if products.isEmpty {
-                collectionView.setEmptyMessage("Oups... \n There's nothing to be shown here")
+                messageLabel.isHidden = false
             } else {
                 if sortedAsc {
                     products = products.sorted(by: {$0.date! < $1.date!})
                 } else {
                     products = products.sorted(by: {$0.date! > $1.date!})
                 }
-                collectionView.restore()
+                messageLabel.isHidden = true
             }
         }
         collectionView.reloadData()
-    }
-
-    ///
-    /// func - direct match
-    ///
-    // FIXME: - make extension
-    private func exactMatch(tags: [String], searchedString: String) -> Bool {
-        var matchFound = false
-        for tag in tags {
-            if tag == searchedString {
-                matchFound = true
-            }
-        }
-        return matchFound
     }
 
     ///
@@ -66,13 +65,11 @@ class ProductsViewController: UIViewController {
         // sort  Asc
         if sortedAsc {
             products = products.sorted(by: {$0.date! > $1.date!})
-            let imageArrowDesc = UIImage(named: "arrow-desc.png")
             sortButton.setImage(imageArrowDesc, for: .normal)
 
         } else {
         // sort Dsc
             products = products.sorted(by: {$0.date! < $1.date!})
-            let imageArrowAsc = UIImage(named: "arrow-asc.png")
             sortButton.setImage(imageArrowAsc, for: .normal)
         }
         sortButton.imageView?.contentMode = .scaleAspectFit
@@ -89,17 +86,23 @@ class ProductsViewController: UIViewController {
         super.viewDidLoad()
         self.navigationItem.setHidesBackButton(true, animated: true)
 
-        let imageArrowAsc = UIImage(named: "arrow-asc.png")
-        sortButton.setImage(imageArrowAsc, for: .normal)
-        sortButton.imageView?.contentMode = .scaleAspectFit
-
+        // collectionview delegates & register xibs (cells compact & extended)
         collectionView.delegate = self
         collectionView.dataSource = self
-
         collectionView.register(UINib(nibName: String(describing: CompactCollectionViewCell.self), bundle: nil), forCellWithReuseIdentifier: String(describing: CompactCollectionViewCell.self))
         collectionView.register(UINib(nibName: String(describing: ExtendedCollectionViewCell.self), bundle: nil), forCellWithReuseIdentifier: String(describing: ExtendedCollectionViewCell.self))
 
+        // init image button
+        sortButton.setImage(imageArrowAsc, for: .normal)
+        sortButton.imageView?.contentMode = .scaleAspectFit
+
+        // init messageLabel
+        initMessageLabel()
+
+        // init layout mode
         UserDefaults.standard.set(LayoutMode.compact.rawValue, forKey: "layoutMode")
+
+        // http request for products
         httpGetProducts()
     }
 
@@ -107,6 +110,7 @@ class ProductsViewController: UIViewController {
     /// View Will Appear
     ///
     override func viewWillAppear(_ animated: Bool) {
+        // update layoutMode
         if UserDefaults.standard.string(forKey: "layoutMode") == LayoutMode.compact.rawValue {
             layoutMode = LayoutMode.compact
         } else {
@@ -129,6 +133,45 @@ class ProductsViewController: UIViewController {
 
 
     // MARK: - Functions
+
+    ///
+    /// Init Empty List Message Label
+    ///
+    private func initMessageLabel() {
+        messageLabel = UILabel(frame: CGRect(x: 0, y: 0, width: collectionView.bounds.size.width, height: collectionView.bounds.size.height))
+        messageLabel.textColor = .darkGray
+        messageLabel.numberOfLines = 0;
+        messageLabel.textAlignment = .center;
+        messageLabel.font = UIFont(name: "System", size: 15)
+        messageLabel.text = "Oups... \n There's nothing to be shown here"
+        messageLabel.sizeToFit()
+        messageLabel.isHidden = true
+        collectionView.backgroundView = messageLabel;
+    }
+
+    ///
+    /// Change Layout acording to
+    ///
+    private func changeLayout() {
+        collectionView.collectionViewLayout.invalidateLayout()
+        // compact
+        if layoutMode == LayoutMode.compact {
+                    if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+                        layout.scrollDirection = .vertical
+                        layout.collectionView?.alwaysBounceVertical = true
+                        layout.collectionView?.alwaysBounceHorizontal = false
+                        layout.itemSize = CGSize(width: view.frame.width, height: 185)
+                    }
+        } else {
+            // extended
+            if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+                layout.scrollDirection = .horizontal
+                layout.collectionView?.alwaysBounceVertical = false
+                layout.collectionView?.alwaysBounceHorizontal = true
+                layout.itemSize = CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
+            }
+        }
+    }
 
     ///
     /// HTTP Get Products
@@ -181,58 +224,10 @@ class ProductsViewController: UIViewController {
         }
     }
 
-    // FIXME: Extenstion to UIImage or String
-    ///
-    /// Convert String To Image  = converts a base64 String to a UIImage
-    ///
-    private func convertStringToImage(_ imageString: String) -> UIImage {
-        let imageData =  Data(base64Encoded: imageString, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
-        if let imageData = imageData {
-            return UIImage(data: imageData)!
-        }
-        return UIImage()
-    }
-
-    // FIXME: Extenstion to UIImage or String
-    ///
-    /// String Array To String with Commas  = joins strings in array with "," sepparator
-    ///
-    private func stringArrayToStringWithCommas(_ stringArray: [String]) -> String {
-        let separatedTags = stringArray
-        if separatedTags != [""] {
-            let joinedTags = separatedTags.joined(separator: ", ") // separating tags with ","
-            return joinedTags
-        }
-        return ""
-    }
-
-
-    ///
-    /// Change Layout acording to
-    ///
-    private func changeLayout() {
-        collectionView.collectionViewLayout.invalidateLayout()
-        // compact
-        if layoutMode == LayoutMode.compact {
-                    if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-                        layout.scrollDirection = .vertical
-                        layout.collectionView?.alwaysBounceVertical = true
-                        layout.collectionView?.alwaysBounceHorizontal = false
-                        layout.itemSize = CGSize(width: view.frame.width, height: 185)
-                    }
-        } else {
-            // extended
-            if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-                layout.scrollDirection = .horizontal
-                layout.collectionView?.alwaysBounceVertical = false
-                layout.collectionView?.alwaysBounceHorizontal = true
-                layout.itemSize = CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
-            }
-        }
-    }
 }
 
-// MARK: - Extension CollectionView Delegate
+// MARK: - Extensions - Delegate & DataSource & FlowLayout
+
 extension ProductsViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -244,16 +239,18 @@ extension ProductsViewController: UICollectionViewDelegate {
         let item = products[indexPath.row]
         productDetail.title = item.title
         productDetail.description = item.description
-        productDetail.tags = stringArrayToStringWithCommas(item.tags!)
-        productDetail.image = convertStringToImage(item.image!)
-
+        if let tags = item.tags {
+            productDetail.tags = tags.stringArrayToStringWithCommas()
+        }
+        if let imageString = item.image {
+            productDetail.image = imageString.convertStringToImage()
+        }
         // segue to productDetailsViewController
         performSegue(withIdentifier: Constants.fromProductToProductDetails, sender: nil)
     }
 
 }
 
-// MARK: - Extension CollectionView Data Source
 extension ProductsViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -266,8 +263,13 @@ extension ProductsViewController: UICollectionViewDataSource {
                 let item = products[indexPath.row]
                 productCell.productTitle.text = item.title
                 productCell.productDescription.text = item.description
-                productCell.productTags.text = stringArrayToStringWithCommas(item.tags!)
-                productCell.productImage.image = convertStringToImage(item.image!)
+                if let tags = item.tags {
+                    productCell.productTags.text = tags.stringArrayToStringWithCommas()
+                }
+                if let stringImage = item.image {
+                    productCell.productImage.image = stringImage.convertStringToImage()
+                }
+
                 return productCell
         } else {
             // Horizontal
@@ -278,15 +280,17 @@ extension ProductsViewController: UICollectionViewDataSource {
                 let item = products[indexPath.row]
                 productCell.productTitle.text = item.title
                 productCell.productDescription.text = item.description
-                productCell.productTags.text = stringArrayToStringWithCommas(item.tags!)
-                productCell.productImage.image = convertStringToImage(item.image!)
+                if let tags = item.tags {
+                    productCell.productTags.text = tags.stringArrayToStringWithCommas()
+                }
+                if let stringImage = item.image {
+                    productCell.productImage.image = stringImage.convertStringToImage()
+                }
                 return productCell
         }
     }
 }
 
-
-// MARK: - Extension CollectionView Flow Layout
 extension ProductsViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -294,25 +298,38 @@ extension ProductsViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-///
-/// extension CollectionView
-///
-extension UICollectionView {
-
-    // FIXME: implemented isHidden instead of this
-    func setEmptyMessage(_ message: String) {
-        let messageLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.bounds.size.width, height: self.bounds.size.height))
-                messageLabel.text = message
-                messageLabel.textColor = .darkGray
-                messageLabel.numberOfLines = 0;
-                messageLabel.textAlignment = .center;
-                messageLabel.font = UIFont(name: "System", size: 15)
-                messageLabel.sizeToFit()
-
-                self.backgroundView = messageLabel;
+// MARK: - Extensions - [String] & String
+extension Array where Element == String {
+    func containsExactMatchToElement(element: Element) -> Bool {
+        var matchFound = false
+        self.forEach{ arrayElement in
+            if arrayElement == element {
+                matchFound = true
+            }
+        }
+        return matchFound
     }
+    ///
+    /// String Array To String with Commas  = joins strings in array with "," sepparator
+    ///
+    func stringArrayToStringWithCommas() -> String {
+        if self != [""] {
+            let joinedTags = self.joined(separator: ", ") // separating tags with ","
+            return joinedTags
+        }
+        return ""
+    }
+}
 
-    func restore() {
-        self.backgroundView = nil
+extension String {
+    ///
+    /// Convert String To Image  = converts a base64 String to a UIImage
+    ///
+     func convertStringToImage() -> UIImage {
+        let imageData =  Data(base64Encoded: self, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
+        if let imageData = imageData {
+            return UIImage(data: imageData)!
+        }
+        return UIImage()
     }
 }

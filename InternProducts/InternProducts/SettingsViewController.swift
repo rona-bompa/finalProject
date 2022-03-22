@@ -9,7 +9,12 @@ import UIKit
 
 class SettingsViewController: UIViewController {
 
+    // MARK: - Outlets
+
     @IBOutlet weak var segmentedControl: UISegmentedControl!
+
+
+    // MARK: - Button Action
 
     @IBAction func segmentedControl(_ sender: UISegmentedControl) {
         switch segmentedControl.selectedSegmentIndex {
@@ -18,6 +23,8 @@ class SettingsViewController: UIViewController {
         default: break
         }
     }
+
+    // MARK: - Overrides
 
     override func viewDidLoad() {
         super.viewDidLoad()

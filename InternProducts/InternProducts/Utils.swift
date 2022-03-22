@@ -12,21 +12,16 @@ import Foundation
 ///
 struct Constants {
     static let okHttpStatusCode = 200
-    /// segues identifiers
-
+    // segues identifiers
     static let fromProductToProductDetails = "fromProductToProductDetails"
     static let fromLoginToTabBarController = "fromLoginToTabBarController"
     static let fromRegisterToTabBarController = "fromRegisterToTabBarController"
-    /// identifiers
-    static let productTableViewCellId = "ProductTableViewCell"
-    static let productCellId = "ProductCell"
 }
 
 ///
-/// Session Variables - login token & layout mode
+/// Session Variables - login token
 ///
-class SessionVariables {
-    /// loginToken
+struct SessionVariables {
     static var loginToken = ""
 }
 
