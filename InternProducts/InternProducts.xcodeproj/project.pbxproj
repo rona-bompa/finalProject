@@ -86,8 +86,8 @@
 			children = (
 				9323E54927E323D800D5EAE4 /* TabBarController.swift */,
 				9323E54F27E32ACA00D5EAE4 /* ProductsViewController.swift */,
-				9346F02527E227CA0073E7A3 /* SettingsViewController.swift */,
 				935A4EAB27DFAEC40037AA23 /* ProductDetailsViewController.swift */,
+				9346F02527E227CA0073E7A3 /* SettingsViewController.swift */,
 			);
 			path = "Products ViewControllers";
 			sourceTree = "<group>";

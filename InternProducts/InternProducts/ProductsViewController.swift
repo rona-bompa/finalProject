@@ -14,11 +14,76 @@ class ProductsViewController: UIViewController {
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var collectionView: UICollectionView!
 
+    // products of the filtered list
     private var products = [Product]()
+    // all products from http get request
+    private var allProducts = [Product]()
+
     private var productDetail = ProductDetail()
     var layoutMode = LayoutMode.compact
+    private var sortedAsc = true
 
-    
+    @IBOutlet weak var searchTextField: UITextField!
+    @IBOutlet weak var sortButton: UIButton!
+
+    @IBOutlet weak var viewImage: UIView!
+
+
+    //var noDataLabel: UILabel
+
+    @IBAction func searchTextField(_ sender: UITextField) {
+        if let searchedString = searchTextField.text {
+            products = (searchedString == "") ? allProducts : allProducts.filter {
+                $0.title.contains(searchedString) || $0.description.contains(searchedString) || exactMatch(tags: $0.tags!, searchedString: searchedString)
+            }
+            if products.isEmpty {
+                collectionView.setEmptyMessage("Oups... \n There's nothing to be shown here")
+            } else {
+                if sortedAsc {
+                    products = products.sorted(by: {$0.date! < $1.date!})
+                } else {
+                    products = products.sorted(by: {$0.date! > $1.date!})
+                }
+                collectionView.restore()
+            }
+        }
+        collectionView.reloadData()
+    }
+
+    ///
+    /// func - direct match
+    ///
+    // FIXME: - make extension
+    private func exactMatch(tags: [String], searchedString: String) -> Bool {
+        var matchFound = false
+        for tag in tags {
+            if tag == searchedString {
+                matchFound = true
+            }
+        }
+        return matchFound
+    }
+    ///
+    /// Sorting Button Action
+    ///
+    @IBAction func sortingButtonAction(_ sender: UIButton) {
+        // sort  Asc
+        if sortedAsc {
+            products = products.sorted(by: {$0.date! > $1.date!})
+            let imageArrowDesc = UIImage(named: "arrow-desc.png")
+            sortButton.setImage(imageArrowDesc, for: .normal)
+
+        } else {
+        // sort Dsc
+            products = products.sorted(by: {$0.date! < $1.date!})
+            let imageArrowAsc = UIImage(named: "arrow-asc.png")
+            sortButton.setImage(imageArrowAsc, for: .normal)
+        }
+        sortButton.imageView?.contentMode = .scaleAspectFit
+        sortedAsc = !sortedAsc
+        collectionView.reloadData()
+    }
+
     // MARK: - Overrides
 
     ///
@@ -27,6 +92,10 @@ class ProductsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.setHidesBackButton(true, animated: true)
+
+        let imageArrowAsc = UIImage(named: "arrow-asc.png")
+        sortButton.setImage(imageArrowAsc, for: .normal)
+        sortButton.imageView?.contentMode = .scaleAspectFit
 
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -43,6 +112,7 @@ class ProductsViewController: UIViewController {
     /// View Will Appear
     ///
     override func viewWillAppear(_ animated: Bool) {
+
         if UserDefaults.standard.string(forKey: "layoutMode") == LayoutMode.compact.rawValue {
             layoutMode = LayoutMode.compact
         } else {
@@ -98,6 +168,7 @@ class ProductsViewController: UIViewController {
                             return
                         }
 
+                        self.allProducts = productsHttpResponse.sorted(by: {$0.date! < $1.date!})
                         self.products = productsHttpResponse.sorted(by: {$0.date! < $1.date!}) // sorted by date
 
                         DispatchQueue.main.async {
@@ -117,6 +188,7 @@ class ProductsViewController: UIViewController {
         }
     }
 
+    // FIXME: Extenstion to UIImage or String
     ///
     /// Convert String To Image  = converts a base64 String to a UIImage
     ///
@@ -128,6 +200,7 @@ class ProductsViewController: UIViewController {
         return UIImage()
     }
 
+    // FIXME: Extenstion to UIImage or String
     ///
     /// String Array To String with Commas  = joins strings in array with "," sepparator
     ///
@@ -237,5 +310,28 @@ extension ProductsViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
+    }
+}
+
+///
+/// extension CollectionView
+///
+extension UICollectionView {
+
+    // FIXME: implemented isHidden instead of this
+    func setEmptyMessage(_ message: String) {
+        let messageLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.bounds.size.width, height: self.bounds.size.height))
+                messageLabel.text = message
+                messageLabel.textColor = .darkGray
+                messageLabel.numberOfLines = 0;
+                messageLabel.textAlignment = .center;
+                messageLabel.font = UIFont(name: "System", size: 15)
+                messageLabel.sizeToFit()
+
+                self.backgroundView = messageLabel;
+    }
+
+    func restore() {
+        self.backgroundView = nil
     }
 }

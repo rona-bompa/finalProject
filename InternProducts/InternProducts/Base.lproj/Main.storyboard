@@ -216,16 +216,60 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ApB-yt-56r">
+                                <rect key="frame" x="0.0" y="119" width="414" height="44"/>
+                                <items>
+                                    <barButtonItem style="plain" id="QJM-ms-56e">
+                                        <textField key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" id="jcN-dQ-m32">
+                                            <rect key="frame" x="20" y="5" width="310" height="34"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                            <connections>
+                                                <action selector="searchTextField:" destination="B6i-Fs-Yu2" eventType="editingChanged" id="OcY-QA-i83"/>
+                                            </connections>
+                                        </textField>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" id="rsu-RX-XTk">
+                                        <view key="customView" contentMode="scaleToFill" id="ilO-KG-PR9">
+                                            <rect key="frame" x="394" y="5.6666666666666679" width="0.0" height="33"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <subviews>
+                                                <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k0J-6d-jOk">
+                                                    <rect key="frame" x="-5" y="2" width="7" height="29"/>
+                                                    <color key="tintColor" systemColor="systemRedColor"/>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <state key="normal">
+                                                        <color key="titleColor" systemColor="tintColor"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="sortingButtonAction:" destination="B6i-Fs-Yu2" eventType="touchUpInside" id="avd-qC-JYi"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="k0J-6d-jOk" secondAttribute="trailing" constant="-2" id="J9z-R5-Mli"/>
+                                                <constraint firstItem="k0J-6d-jOk" firstAttribute="leading" secondItem="ilO-KG-PR9" secondAttribute="leading" constant="-5" id="NKy-Ub-dqT"/>
+                                                <constraint firstItem="k0J-6d-jOk" firstAttribute="top" secondItem="ilO-KG-PR9" secondAttribute="top" constant="2" id="WBu-dh-tz3"/>
+                                                <constraint firstItem="k0J-6d-jOk" firstAttribute="centerY" secondItem="ilO-KG-PR9" secondAttribute="centerY" id="fcX-CQ-bkq"/>
+                                            </constraints>
+                                        </view>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="q7G-4u-bGC"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="mfx-TU-Shg" firstAttribute="centerX" secondItem="w9r-wx-OCT" secondAttribute="centerX" id="1Bj-bE-dZo"/>
-                            <constraint firstItem="Fii-b8-TnO" firstAttribute="top" secondItem="mfx-TU-Shg" secondAttribute="bottom" constant="50" id="4OF-YP-0ic"/>
+                            <constraint firstItem="q7G-4u-bGC" firstAttribute="trailing" secondItem="ApB-yt-56r" secondAttribute="trailing" id="2YX-pp-tTE"/>
                             <constraint firstItem="jAU-vC-wTm" firstAttribute="centerX" secondItem="w9r-wx-OCT" secondAttribute="centerX" id="ANF-fG-eiE"/>
                             <constraint firstItem="Fii-b8-TnO" firstAttribute="trailing" secondItem="q7G-4u-bGC" secondAttribute="trailing" id="ZJd-1c-p64"/>
+                            <constraint firstItem="ApB-yt-56r" firstAttribute="top" secondItem="mfx-TU-Shg" secondAttribute="bottom" constant="2" id="cc2-zF-U5E"/>
+                            <constraint firstItem="Fii-b8-TnO" firstAttribute="top" secondItem="ApB-yt-56r" secondAttribute="bottom" constant="4" id="duI-Go-KxF"/>
                             <constraint firstItem="mfx-TU-Shg" firstAttribute="top" secondItem="q7G-4u-bGC" secondAttribute="top" constant="25" id="lk9-Bo-SJb"/>
                             <constraint firstItem="jAU-vC-wTm" firstAttribute="centerY" secondItem="w9r-wx-OCT" secondAttribute="centerY" id="rD9-w0-3Sh"/>
+                            <constraint firstItem="ApB-yt-56r" firstAttribute="leading" secondItem="q7G-4u-bGC" secondAttribute="leading" id="reD-cw-kwd"/>
                             <constraint firstItem="Fii-b8-TnO" firstAttribute="bottom" secondItem="q7G-4u-bGC" secondAttribute="bottom" id="uw5-Pf-y5i"/>
                             <constraint firstItem="Fii-b8-TnO" firstAttribute="leading" secondItem="q7G-4u-bGC" secondAttribute="leading" id="x7T-aZ-Jkd"/>
                         </constraints>
@@ -233,13 +277,16 @@
                     <tabBarItem key="tabBarItem" title="Products" id="CN2-4J-oGW"/>
                     <connections>
                         <outlet property="collectionView" destination="Fii-b8-TnO" id="BuN-30-7OZ"/>
+                        <outlet property="searchTextField" destination="jcN-dQ-m32" id="MbH-E2-S4L"/>
+                        <outlet property="sortButton" destination="k0J-6d-jOk" id="FcC-xq-lZC"/>
                         <outlet property="spinner" destination="jAU-vC-wTm" id="aeO-bm-7yJ"/>
+                        <outlet property="viewImage" destination="ilO-KG-PR9" id="7Pi-AP-yfu"/>
                         <segue destination="hMW-Wp-tSg" kind="presentation" identifier="fromProductToProductDetails" id="mxg-68-iHV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UM2-yb-e4e" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3200" y="90"/>
+            <point key="canvasLocation" x="3200.0000000000005" y="89.673913043478265"/>
         </scene>
         <!--Product Details View Controller-->
         <scene sceneID="rHc-2I-8SN">
@@ -278,7 +325,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Fax-bk-tpp">
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Fax-bk-tpp">
                                                 <rect key="frame" x="8" y="303" width="398" height="331"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
@@ -439,6 +486,9 @@
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="tintColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -29,7 +29,7 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5lb-zd-F2f">
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5lb-zd-F2f">
                         <rect key="frame" x="137" y="39" width="272" height="84"/>
                         <string key="text">DesciptionDesciptionDesciptionDesciptionDesciptionDesciptionDesciptionDesciptionDesciptionDesciptionDesciptionDesciptionDesciptionDesciptionDesciptionDesciptionDesciptionDesciptionDesciptionDesciptionDesciptionDesciptionDesciptionDesciptionDesciptionDesciptionDesciptionDesciptionDesciptionDesci</string>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
