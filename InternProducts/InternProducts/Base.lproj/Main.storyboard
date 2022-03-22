@@ -280,7 +280,6 @@
                         <outlet property="searchTextField" destination="jcN-dQ-m32" id="MbH-E2-S4L"/>
                         <outlet property="sortButton" destination="k0J-6d-jOk" id="FcC-xq-lZC"/>
                         <outlet property="spinner" destination="jAU-vC-wTm" id="aeO-bm-7yJ"/>
-                        <outlet property="viewImage" destination="ilO-KG-PR9" id="7Pi-AP-yfu"/>
                         <segue destination="hMW-Wp-tSg" kind="presentation" identifier="fromProductToProductDetails" id="mxg-68-iHV"/>
                     </connections>
                 </viewController>

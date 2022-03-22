@@ -26,11 +26,6 @@ class ProductsViewController: UIViewController {
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var sortButton: UIButton!
 
-    @IBOutlet weak var viewImage: UIView!
-
-
-    //var noDataLabel: UILabel
-
     @IBAction func searchTextField(_ sender: UITextField) {
         if let searchedString = searchTextField.text {
             products = (searchedString == "") ? allProducts : allProducts.filter {
@@ -63,6 +58,7 @@ class ProductsViewController: UIViewController {
         }
         return matchFound
     }
+
     ///
     /// Sorting Button Action
     ///
@@ -104,7 +100,6 @@ class ProductsViewController: UIViewController {
         collectionView.register(UINib(nibName: String(describing: ExtendedCollectionViewCell.self), bundle: nil), forCellWithReuseIdentifier: String(describing: ExtendedCollectionViewCell.self))
 
         UserDefaults.standard.set(LayoutMode.compact.rawValue, forKey: "layoutMode")
-
         httpGetProducts()
     }
 
@@ -112,13 +107,11 @@ class ProductsViewController: UIViewController {
     /// View Will Appear
     ///
     override func viewWillAppear(_ animated: Bool) {
-
         if UserDefaults.standard.string(forKey: "layoutMode") == LayoutMode.compact.rawValue {
             layoutMode = LayoutMode.compact
         } else {
             layoutMode = LayoutMode.expanded
         }
-
         changeLayout()
         collectionView.reloadData()
     }
@@ -213,6 +206,7 @@ class ProductsViewController: UIViewController {
         return ""
     }
 
+
     ///
     /// Change Layout acording to
     ///
@@ -235,25 +229,16 @@ class ProductsViewController: UIViewController {
                 layout.itemSize = CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
             }
         }
-
     }
 }
 
-// MARK: - Extensions
-
-///
-/// extension CollectionView DELEGATE
-///
+// MARK: - Extension CollectionView Delegate
 extension ProductsViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return products.count
     }
 
-    ///
-    /// Did Select Item At  -  cell clicked
-    ///
-    ///
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // set productDeail
         let item = products[indexPath.row]
@@ -268,9 +253,7 @@ extension ProductsViewController: UICollectionViewDelegate {
 
 }
 
-///
-/// extension CollectionView DATA SOURCE
-///
+// MARK: - Extension CollectionView Data Source
 extension ProductsViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -303,9 +286,7 @@ extension ProductsViewController: UICollectionViewDataSource {
 }
 
 
-///
-/// extension CollectionView FLOW LAYOUT
-///
+// MARK: - Extension CollectionView Flow Layout
 extension ProductsViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
