@@ -12,8 +12,8 @@ class LoginViewController: UIViewController {
     // MARK: - Outlets
     @IBOutlet weak var username: UITextField!
     @IBOutlet weak var password: UITextField!
-
-    private let httpServices = HTTPServices()
+    
+    private let httpService = HTTPService()
     
     // MARK: - Overrides
     
@@ -24,7 +24,7 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         password.isSecureTextEntry = true
     }
-
+    
     ///
     /// Prepare for segue
     ///
@@ -44,22 +44,19 @@ class LoginViewController: UIViewController {
     @IBAction func login(_ sender: UIButton) {
         // if all textFields are NOT empty
         if username.text != "" && password.text != "" {
-            httpServices.httpUserRequest(authenticationType: "login", username: username.text!, password: password.text!, action: { hTTPResultCases, message in
-                switch hTTPResultCases {
-                case .error:
-                    DispatchQueue.main.async {
-                        self.showAlert(withMessage: "Request error received: \(message)")
-                    }
-                case .responseFail:
-                        DispatchQueue.main.async {
-                            self.showAlert(withMessage: "Expected 200 status code, but received: \(message)")
-                    }
-                case .dataSuccess:
-                    DispatchQueue.main.async {
+            httpService.httpUserRequest(authenticationType: "login",
+                                        username: username.text!,
+                                        password: password.text!,
+                                        action: { hTTPResultCases, message in
+                DispatchQueue.main.async {
+                    switch hTTPResultCases {
+                    case .error:
+                        self.showAlert(withMessage: message)
+                    case .responseFail:
+                        self.showAlert(withMessage: message)
+                    case .dataSuccess:
                         self.performSegue(withIdentifier: Constants.fromLoginToTabBarController, sender: nil)
-                    }
-                case .dataFail:
-                    DispatchQueue.main.async {
+                    case .dataFail:
                         self.showAlert(withMessage: message)
                     }
                 }

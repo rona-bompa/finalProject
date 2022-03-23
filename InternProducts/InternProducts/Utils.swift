@@ -32,4 +32,3 @@ enum LayoutMode: String {
     case compact = "compact"
     case expanded = "expanded"
 }
-

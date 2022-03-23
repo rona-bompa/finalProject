@@ -15,9 +15,9 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var password: UITextField!
     @IBOutlet weak var confirmPassword: UITextField!
     @IBOutlet weak var passwordMismatchErrorLabel: UILabel!
-
-    private let httpServices = HTTPServices()
-
+    
+    private let httpService = HTTPService()
+    
     
     // MARK: - Overrides
     
@@ -31,20 +31,18 @@ class RegisterViewController: UIViewController {
         confirmPassword.isSecureTextEntry = true
         passwordMismatchErrorLabel.isHidden = true
     }
-
+    
     ///
     /// Prepare for segue
     ///
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Constants.fromRegisterToTabBarController {
             if let cvc = segue.destination as? TabBarController {
-                cvc.navigationItem.leftBarButtonItem = nil
-                cvc.navigationItem.hidesBackButton = true
                 cvc.navigationItem.setHidesBackButton(true, animated: true)
             }
         }
     }
-
+    
     // MARK: - Button Actions
     
     ///
@@ -53,26 +51,23 @@ class RegisterViewController: UIViewController {
     @IBAction func register(_ sender: UIButton) {
         // if all textFields are NOT empty
         if username.text != "" && password.text != "" && confirmPassword.text != "" {
-            // if the passwords match
+            // if passwords match
             if password.text == confirmPassword.text {
                 passwordMismatchErrorLabel.isHidden = true
                 // HTTP Register Request
-                httpServices.httpUserRequest(authenticationType: "register", username: username.text!, password: password.text!, action: { hTTPResultCases, message in
-                    switch hTTPResultCases {
-                    case .error:
-                        DispatchQueue.main.async {
-                            self.showAlert(withMessage: "Request error received: \(message)")
-                        }
-                    case .responseFail:
-                            DispatchQueue.main.async {
-                                self.showAlert(withMessage: "Expected 200 status code, but received: \(message)")
-                            }
-                    case .dataSuccess:
-                        DispatchQueue.main.async {
+                httpService.httpUserRequest(authenticationType: "register",
+                                            username: username.text!,
+                                            password: password.text!,
+                                            action: { httpResultCases, message in
+                    DispatchQueue.main.async {
+                        switch httpResultCases {
+                        case .error:
+                            self.showAlert(withMessage: message)
+                        case .responseFail:
+                            self.showAlert(withMessage: message)
+                        case .dataSuccess:
                             self.performSegue(withIdentifier: Constants.fromRegisterToTabBarController, sender: nil)
-                        }
-                    case .dataFail:
-                        DispatchQueue.main.async {
+                        case .dataFail:
                             self.showAlert(withMessage: message)
                         }
                     }

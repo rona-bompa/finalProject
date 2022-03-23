@@ -8,32 +8,32 @@
 import UIKit
 
 class ProductsViewController: UIViewController {
-
+    
     // MARK: - Outlets
-
+    
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var sortButton: UIButton!
-
     var messageLabel = UILabel()
-
+    
+    
     // MARK: - Variables
-
+    
+    private let httpService = HTTPService()
     /// products of the filtered list
     private var products = [Product]()
     /// all products from http get request
     private var allProducts = [Product]()
     /// productDetail to be shown in ProductDetailsViewController
     private var productDetail = ProductDetail()
-
+    
     var layoutMode = LayoutMode.compact
     private var sortedAsc = true
-
+    
     let imageArrowAsc = UIImage(named: "arrow-asc.png")
     let imageArrowDesc = UIImage(named: "arrow-desc.png")
-
-
+    
     // MARK: - Actions - filter & sort
     ///
     ///  Search TextField Action
@@ -44,7 +44,7 @@ class ProductsViewController: UIViewController {
                 $0.title.contains(searchedString) ||
                 $0.description.contains(searchedString) ||
                 $0.tags!.containsExactMatchToElement(element: searchedString)
-                }
+            }
             if products.isEmpty {
                 messageLabel.isHidden = false
             } else {
@@ -58,7 +58,7 @@ class ProductsViewController: UIViewController {
         }
         collectionView.reloadData()
     }
-
+    
     ///
     /// Sorting Button Action
     ///
@@ -67,9 +67,8 @@ class ProductsViewController: UIViewController {
         if sortedAsc {
             products = products.sorted(by: {$0.date! > $1.date!})
             sortButton.setImage(imageArrowDesc, for: .normal)
-
         } else {
-        // sort Dsc
+            // sort Dsc
             products = products.sorted(by: {$0.date! < $1.date!})
             sortButton.setImage(imageArrowAsc, for: .normal)
         }
@@ -77,37 +76,36 @@ class ProductsViewController: UIViewController {
         sortedAsc = !sortedAsc
         collectionView.reloadData()
     }
-
+    
     // MARK: - Overrides
-
+    
     ///
     /// View Did Load
     ///
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.setHidesBackButton(true, animated: true)
-
-
+        
         // collectionview delegates & register xibs (cells compact & extended)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(UINib(nibName: String(describing: CompactCollectionViewCell.self), bundle: nil), forCellWithReuseIdentifier: String(describing: CompactCollectionViewCell.self))
         collectionView.register(UINib(nibName: String(describing: ExtendedCollectionViewCell.self), bundle: nil), forCellWithReuseIdentifier: String(describing: ExtendedCollectionViewCell.self))
-
+        
         // init image button
         sortButton.setImage(imageArrowAsc, for: .normal)
         sortButton.imageView?.contentMode = .scaleAspectFit
-
+        
         // init messageLabel
         initMessageLabel()
-
+        
         // init layout mode
         UserDefaults.standard.set(LayoutMode.compact.rawValue, forKey: "layoutMode")
-
+        
         // http request for products
-        httpGetProducts()
+        getProducts()
     }
-
+    
     ///
     /// View Will Appear
     ///
@@ -121,7 +119,7 @@ class ProductsViewController: UIViewController {
         changeLayout()
         collectionView.reloadData()
     }
-
+    
     ///
     /// Prepare for segue
     ///
@@ -132,10 +130,37 @@ class ProductsViewController: UIViewController {
             }
         }
     }
-
-
+    
     // MARK: - Functions
-
+    
+    ///
+    /// Get Products
+    ///
+    private func getProducts() {
+        spinner.startAnimating()
+        
+        httpService.httpGetProducts { httpResultCases, message, products in
+            DispatchQueue.main.async {
+                switch httpResultCases {
+                case .error:
+                    print(message)
+                case .responseFail:
+                    print(message)
+                case .dataSuccess:
+                    if let products = products {
+                        self.allProducts = products.sorted(by: {$0.date! < $1.date!})
+                        self.products = products.sorted(by: {$0.date! < $1.date!}) // sorted by date
+                    }
+                    self.collectionView.reloadData()
+                    self.spinner.stopAnimating()
+                    
+                case .dataFail:
+                    print(message)
+                }
+            }
+        }
+    }
+    
     ///
     /// Init Empty List Message Label
     ///
@@ -150,7 +175,7 @@ class ProductsViewController: UIViewController {
         messageLabel.isHidden = true
         collectionView.backgroundView = messageLabel;
     }
-
+    
     ///
     /// Change Layout acording to
     ///
@@ -158,12 +183,12 @@ class ProductsViewController: UIViewController {
         collectionView.collectionViewLayout.invalidateLayout()
         // compact
         if layoutMode == LayoutMode.compact {
-                    if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-                        layout.scrollDirection = .vertical
-                        layout.collectionView?.alwaysBounceVertical = true
-                        layout.collectionView?.alwaysBounceHorizontal = false
-                        layout.itemSize = CGSize(width: view.frame.width, height: 185)
-                    }
+            if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+                layout.scrollDirection = .vertical
+                layout.collectionView?.alwaysBounceVertical = true
+                layout.collectionView?.alwaysBounceHorizontal = false
+                layout.itemSize = CGSize(width: view.frame.width, height: 185)
+            }
         } else {
             // extended
             if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
@@ -174,68 +199,16 @@ class ProductsViewController: UIViewController {
             }
         }
     }
-
-    ///
-    /// HTTP Get Products
-    ///
-    private func httpGetProducts() {
-        spinner.startAnimating()
-        let urlSession = URLSession(configuration: .default)
-        if let url = URL(string: "http://localhost:8080/products?loginToken=\(SessionVariables.loginToken)") {
-
-            let task = urlSession.dataTask(with: url) { [weak self] data, response, error in
-                guard let self = self else { return }
-                /// error
-                if let error = error {
-                    print("Request error received: \(error)")
-                    /// response
-                } else if let response = response as? HTTPURLResponse, response.statusCode != Constants.okHttpStatusCode {
-                    print("Expected 200 status code, but received: \(response.statusCode)")
-                    /// data
-                } else if let data = data {
-                    // decoding data
-                    let decoder = JSONDecoder()
-                    guard let httpResponse = try? decoder.decode(Response.self, from: data) else {
-                        print("Data serialization error: Unexpected format received!")
-                        return
-                    }
-                    // if SUCCES, store in products
-                    if httpResponse.status == "SUCCESS" {
-                        guard let productsHttpResponse = httpResponse.products else {
-                            print("No products returned")
-                            return
-                        }
-
-                        self.allProducts = productsHttpResponse.sorted(by: {$0.date! < $1.date!})
-                        self.products = productsHttpResponse.sorted(by: {$0.date! < $1.date!}) // sorted by date
-
-                        DispatchQueue.main.async {
-                            self.collectionView.reloadData()
-                            self.spinner.stopAnimating()
-                        }
-                        // if FAILED, show message
-                    } else if httpResponse.status == "FAILED" {
-                        print("Status: FAIED; Message: \(httpResponse.message!)")
-                    }
-
-                } else {
-                    print("Request error received:  Unexpected condition")
-                }
-            }
-            task.resume()
-        }
-    }
-
 }
 
 // MARK: - Extensions - Delegate & DataSource & FlowLayout
 
 extension ProductsViewController: UICollectionViewDelegate {
-
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return products.count
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // set productDeail
         let item = products[indexPath.row]
@@ -250,51 +223,50 @@ extension ProductsViewController: UICollectionViewDelegate {
         // segue to productDetailsViewController
         performSegue(withIdentifier: Constants.fromProductToProductDetails, sender: nil)
     }
-
+    
 }
 
 extension ProductsViewController: UICollectionViewDataSource {
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-            // Vertical
+        // Vertical
         if layoutMode == LayoutMode.compact {
             guard let productCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: CompactCollectionViewCell.self), for: indexPath) as? CompactCollectionViewCell else {
-                    print("UI error: Cell dequeue is unexpected instance!")
-                    return UICollectionViewCell()
-                }
-                let item = products[indexPath.row]
-                productCell.productTitle.text = item.title
-                productCell.productDescription.text = item.description
-                if let tags = item.tags {
-                    productCell.productTags.text = tags.stringArrayToStringWithCommas()
-                }
-                if let stringImage = item.image {
-                    productCell.productImage.image = stringImage.convertStringToImage()
-                }
-
-                return productCell
+                print("UI error: Cell dequeue is unexpected instance!")
+                return UICollectionViewCell()
+            }
+            let item = products[indexPath.row]
+            productCell.productTitle.text = item.title
+            productCell.productDescription.text = item.description
+            if let tags = item.tags {
+                productCell.productTags.text = tags.stringArrayToStringWithCommas()
+            }
+            if let stringImage = item.image {
+                productCell.productImage.image = stringImage.convertStringToImage()
+            }
+            return productCell
         } else {
             // Horizontal
             guard let productCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ExtendedCollectionViewCell.self), for: indexPath) as? ExtendedCollectionViewCell else {
-                    print("UI error: Cell dequeue is unexpected instance!")
-                    return UICollectionViewCell()
-                }
-                let item = products[indexPath.row]
-                productCell.productTitle.text = item.title
-                productCell.productDescription.text = item.description
-                if let tags = item.tags {
-                    productCell.productTags.text = tags.stringArrayToStringWithCommas()
-                }
-                if let stringImage = item.image {
-                    productCell.productImage.image = stringImage.convertStringToImage()
-                }
-                return productCell
+                print("UI error: Cell dequeue is unexpected instance!")
+                return UICollectionViewCell()
+            }
+            let item = products[indexPath.row]
+            productCell.productTitle.text = item.title
+            productCell.productDescription.text = item.description
+            if let tags = item.tags {
+                productCell.productTags.text = tags.stringArrayToStringWithCommas()
+            }
+            if let stringImage = item.image {
+                productCell.productImage.image = stringImage.convertStringToImage()
+            }
+            return productCell
         }
     }
 }
 
 extension ProductsViewController: UICollectionViewDelegateFlowLayout {
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
@@ -327,7 +299,7 @@ extension String {
     ///
     /// Convert String To Image  = converts a base64 String to a UIImage
     ///
-     func convertStringToImage() -> UIImage {
+    func convertStringToImage() -> UIImage {
         let imageData =  Data(base64Encoded: self, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
         if let imageData = imageData {
             return UIImage(data: imageData)!

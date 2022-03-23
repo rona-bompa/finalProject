@@ -21,7 +21,6 @@ class ProductDetailsViewController: UIViewController {
     @IBOutlet weak var productDescription: UITextView!
     @IBOutlet weak var productTags: UILabel!
     
-    
     // MARK: - Button Actions
     ///
     /// Close Button Action

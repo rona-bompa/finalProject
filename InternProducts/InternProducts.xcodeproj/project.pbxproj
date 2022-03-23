@@ -18,7 +18,7 @@
 		935A4EA627DF3B980037AA23 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935A4EA527DF3B980037AA23 /* Utils.swift */; };
 		935A4EAC27DFAEC40037AA23 /* ProductDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935A4EAB27DFAEC40037AA23 /* ProductDetailsViewController.swift */; };
 		9394968627EB1E330045CAEA /* InternProductsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9394968527EB1E330045CAEA /* InternProductsTests.swift */; };
-		9394968D27EB1F5B0045CAEA /* HTTPServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9394968C27EB1F5B0045CAEA /* HTTPServices.swift */; };
+		9394968D27EB1F5B0045CAEA /* HTTPService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9394968C27EB1F5B0045CAEA /* HTTPService.swift */; };
 		93E3E2E327DB7C550007B3B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E3E2E227DB7C550007B3B5 /* AppDelegate.swift */; };
 		93E3E2E527DB7C550007B3B5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E3E2E427DB7C550007B3B5 /* SceneDelegate.swift */; };
 		93E3E2EA27DB7C550007B3B5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93E3E2E827DB7C550007B3B5 /* Main.storyboard */; };
@@ -52,7 +52,7 @@
 		935A4EAB27DFAEC40037AA23 /* ProductDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsViewController.swift; sourceTree = "<group>"; };
 		9394968327EB1E330045CAEA /* InternProductsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InternProductsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9394968527EB1E330045CAEA /* InternProductsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternProductsTests.swift; sourceTree = "<group>"; };
-		9394968C27EB1F5B0045CAEA /* HTTPServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HTTPServices.swift; path = "Authentication ViewControllers/HTTPServices.swift"; sourceTree = "<group>"; };
+		9394968C27EB1F5B0045CAEA /* HTTPService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HTTPService.swift; path = "Authentication ViewControllers/HTTPService.swift"; sourceTree = "<group>"; };
 		93E3E2DF27DB7C550007B3B5 /* InternProducts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InternProducts.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93E3E2E227DB7C550007B3B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		93E3E2E427DB7C550007B3B5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -148,7 +148,7 @@
 				9346F02327E1F4630073E7A3 /* Authentication ViewControllers */,
 				9346F02427E1F48C0073E7A3 /* Products ViewControllers */,
 				9394967A27EA24BF0045CAEA /* CollectionViewCells */,
-				9394968C27EB1F5B0045CAEA /* HTTPServices.swift */,
+				9394968C27EB1F5B0045CAEA /* HTTPService.swift */,
 				935A4EA527DF3B980037AA23 /* Utils.swift */,
 				93E3E2E827DB7C550007B3B5 /* Main.storyboard */,
 				93E3E2F027DB7C5F0007B3B5 /* Info.plist */,
@@ -290,7 +290,7 @@
 				9323E55027E32ACA00D5EAE4 /* ProductsViewController.swift in Sources */,
 				93E3E2FA27DB7D720007B3B5 /* LoginViewController.swift in Sources */,
 				9323E55B27E33B8A00D5EAE4 /* ExtendedCollectionViewCell.swift in Sources */,
-				9394968D27EB1F5B0045CAEA /* HTTPServices.swift in Sources */,
+				9394968D27EB1F5B0045CAEA /* HTTPService.swift in Sources */,
 				93E3E2E327DB7C550007B3B5 /* AppDelegate.swift in Sources */,
 				9346F02627E227CA0073E7A3 /* SettingsViewController.swift in Sources */,
 				9323E54A27E323D800D5EAE4 /* TabBarController.swift in Sources */,
