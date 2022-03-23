@@ -12,6 +12,8 @@ class LoginViewController: UIViewController {
     // MARK: - Outlets
     @IBOutlet weak var username: UITextField!
     @IBOutlet weak var password: UITextField!
+
+    private let httpServices = HTTPServices()
     
     // MARK: - Overrides
     
@@ -42,61 +44,30 @@ class LoginViewController: UIViewController {
     @IBAction func login(_ sender: UIButton) {
         // if all textFields are NOT empty
         if username.text != "" && password.text != "" {
-            httpLoginUser()
+            httpServices.httpUserRequest(authenticationType: "login", username: username.text!, password: password.text!, action: { hTTPResultCases, message in
+                switch hTTPResultCases {
+                case .error:
+                    DispatchQueue.main.async {
+                        self.showAlert(withMessage: "Request error received: \(message)")
+                    }
+                case .responseFail:
+                        DispatchQueue.main.async {
+                            self.showAlert(withMessage: "Expected 200 status code, but received: \(message)")
+                    }
+                case .dataSuccess:
+                    DispatchQueue.main.async {
+                        self.performSegue(withIdentifier: Constants.fromLoginToTabBarController, sender: nil)
+                    }
+                case .dataFail:
+                    DispatchQueue.main.async {
+                        self.showAlert(withMessage: message)
+                    }
+                }
+            })
         }
     }
     
     // MARK: - Functions
-    ///
-    /// HTTP Login User
-    ///
-    private func httpLoginUser() {
-        let urlSession = URLSession(configuration: .default)
-        if let url = URL(string: "http://localhost:8080/login?username=\(username.text!)&password=\(password.text!)") {
-            let task = urlSession.dataTask(with: url) { [weak self] data, response, error in
-                guard let self = self else { return }
-                /// error
-                if let error = error {
-                    print("Request error received: \(error)")
-                    DispatchQueue.main.async {
-                        self.showAlert(withMessage: "\(error)")
-                    }
-                    /// response
-                } else if let response = response as? HTTPURLResponse, response.statusCode != Constants.okHttpStatusCode {
-                    DispatchQueue.main.async {
-                        self.showAlert(withMessage: "Expected 200 status code, but received: \(response.statusCode)")
-                    }
-                    /// data
-                } else if let data = data {
-                    do {
-                        guard let httpDataStatusResponse = try JSONSerialization.jsonObject(with: data, options: []) as? [String:String] else {
-                            print("Data serialization error: Unexpected format received!")
-                            return
-                        }
-                        
-                        DispatchQueue.main.async {
-                            // SUCCESS
-                            if httpDataStatusResponse["status"] == "SUCCESS" {
-                                // store & transmit in prepeare the logintToken
-                                SessionVariables.loginToken = httpDataStatusResponse["loginToken"] ?? ""
-                                // proceed to display the products to screen
-                                self.performSegue(withIdentifier: Constants.fromLoginToTabBarController, sender: nil)
-                                // FAIL
-                            } else if httpDataStatusResponse["status"] == "FAILED" {
-                                // display error message in an Alert
-                                self.showAlert(withMessage: httpDataStatusResponse["message"] ?? "status: FAILED")
-                            }
-                        }
-                    } catch {
-                        print("Data serialization error: \(error)")
-                    }
-                } else {
-                    print("Request error received:  Unexpected condition")
-                }
-            }
-            task.resume()
-        }
-    }
     
     ///
     /// Show Alert

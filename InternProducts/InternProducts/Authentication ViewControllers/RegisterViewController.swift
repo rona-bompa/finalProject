@@ -16,6 +16,8 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var confirmPassword: UITextField!
     @IBOutlet weak var passwordMismatchErrorLabel: UILabel!
 
+    private let httpServices = HTTPServices()
+
     
     // MARK: - Overrides
     
@@ -55,7 +57,26 @@ class RegisterViewController: UIViewController {
             if password.text == confirmPassword.text {
                 passwordMismatchErrorLabel.isHidden = true
                 // HTTP Register Request
-                httpRegisterUser()
+                httpServices.httpUserRequest(authenticationType: "register", username: username.text!, password: password.text!, action: { hTTPResultCases, message in
+                    switch hTTPResultCases {
+                    case .error:
+                        DispatchQueue.main.async {
+                            self.showAlert(withMessage: "Request error received: \(message)")
+                        }
+                    case .responseFail:
+                            DispatchQueue.main.async {
+                                self.showAlert(withMessage: "Expected 200 status code, but received: \(message)")
+                            }
+                    case .dataSuccess:
+                        DispatchQueue.main.async {
+                            self.performSegue(withIdentifier: Constants.fromRegisterToTabBarController, sender: nil)
+                        }
+                    case .dataFail:
+                        DispatchQueue.main.async {
+                            self.showAlert(withMessage: message)
+                        }
+                    }
+                })
             } else {
                 // passwords don't match
                 passwordMismatchErrorLabel.isHidden = false
@@ -64,58 +85,6 @@ class RegisterViewController: UIViewController {
     }
     
     // MARK: - Functions
-    
-    ///
-    /// HTTP Register User
-    ///
-    private func httpRegisterUser() {
-        let urlSession = URLSession(configuration: .default)
-        if let url = URL(string: "http://localhost:8080/register?username=\(username.text!)&password=\(password.text!)") {
-            /// closure apelat pe background thread by default
-            let task = urlSession.dataTask(with: url) { [weak self] data, response, error in
-                guard let self = self else { return } /// sa nu avem self?.___ si nici retainCount + 1
-                /// error
-                if let error = error {
-                    print("Request error received: \(error)")
-                    DispatchQueue.main.async {
-                        self.showAlert(withMessage: "\(error)")
-                    }
-                    /// response
-                } else if let response = response as? HTTPURLResponse, response.statusCode != Constants.okHttpStatusCode {
-                    DispatchQueue.main.async {
-                        self.showAlert(withMessage: "Expected 200 status code, but received: \(response.statusCode)")
-                    }
-                    /// data
-                } else if let data = data {
-                    do {
-                        guard let httpDataStatusResponse = try JSONSerialization.jsonObject(with: data, options: []) as? [String:String] else {
-                            print("Data serialization error: Unexpected format received!")
-                            return
-                        }
-                        
-                        DispatchQueue.main.async {
-                            // SUCCESS
-                            if httpDataStatusResponse["status"] == "SUCCESS" {
-                                // store & transmit in prepeare the logintToken
-                                SessionVariables.loginToken = httpDataStatusResponse["loginToken"] ?? ""
-                                // proceed to display the products to screen
-                                self.performSegue(withIdentifier: Constants.fromRegisterToTabBarController, sender: nil)
-                                // FAIL
-                            } else if httpDataStatusResponse["status"] == "FAILED" {
-                                // display error message in an Alert
-                                self.showAlert(withMessage: httpDataStatusResponse["message"] ?? "status: FAILED")
-                            }
-                        }
-                    } catch {
-                        print("Data serialization error: \(error)")
-                    }
-                } else {
-                    print("Request error received:  Unexpected condition")
-                }
-            }
-            task.resume()
-        }
-    }
     
     ///
     /// Show Alert

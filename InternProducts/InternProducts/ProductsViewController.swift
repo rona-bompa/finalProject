@@ -15,6 +15,7 @@ class ProductsViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var sortButton: UIButton!
+
     var messageLabel = UILabel()
 
     // MARK: - Variables
@@ -85,6 +86,7 @@ class ProductsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.setHidesBackButton(true, animated: true)
+
 
         // collectionview delegates & register xibs (cells compact & extended)
         collectionView.delegate = self
